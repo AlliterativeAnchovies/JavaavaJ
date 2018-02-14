@@ -13,8 +13,9 @@ public class Sprite {
     //context.  The offset is used in cases where we want to scroll the screen -
     //the tile's absolute position shouldn't change, but its position relative to the
     //screen will.
+    //Always call super.draw from child classes' overriden draws
     public void draw(int offsetX,int offsetY,Graphics g) {
-        g.drawRect(offsetX+positionX,offsetY+positionY,sizeX,sizeY);
+        //g.drawRect(offsetX+positionX,offsetY+positionY,sizeX,sizeY);
     }
 
     public Sprite(int px,int py,int sx,int sy) {

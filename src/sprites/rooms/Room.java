@@ -30,7 +30,9 @@ public class Room {
     }
 
     public static void drawRooms(Graphics g) {
+        System.out.println("jjj");
         for (Room r : rooms) {
+            System.out.println(r.tiles);
             r.draw(offx, offy, g);
         }
     }
@@ -38,27 +40,26 @@ public class Room {
     //does all tile class-level initialization stuff.
     //later on, this should handle reading sprites.rooms from an image file
     public static void init() {
-        System.out.println("Initializing sprites.rooms...");
+        System.out.println("Initializing rooms...");
         rooms = new Room[ROOM_AMOUNT];
         for (int r = 0; r < ROOM_AMOUNT; r++) {
             File bmpFile = new File("Resources/Rooms/room_" + r + ".bmp");
             try {
                 BufferedImage image = ImageIO.read(bmpFile);
-
-
-                Tile[][] tiles_ = new Tile[image.getHeight()][image.getWidth()];
-                for (int i = 0; i < image.getWidth(); i++) {
-                    for (int j = 0; j < image.getHeight(); j++) {
+                int wd = image.getWidth();
+                int ht = image.getHeight();
+                Tile[][] tiles_ = new Tile[wd][ht];
+                for (int i = 0; i < wd; i++) {
+                    for (int j = 0; j < ht; j++) {
                         tiles_[i][j] = new Tile(
                                 i * Tile.TILE_WIDTH_IN_PIXELS,
                                 j * Tile.TILE_HEIGHT_IN_PIXELS,
                                 Tile.TILE_WIDTH_IN_PIXELS,
                                 Tile.TILE_HEIGHT_IN_PIXELS,
-                                0//tile id
+                                Tile.getTileIDFromColor(image.getRGB(i, j))
                         );
                     }
                 }
-
                 rooms[r] = new Room(tiles_);
             } catch (IOException e) {
                 e.printStackTrace();

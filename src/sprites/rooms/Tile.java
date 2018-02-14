@@ -2,8 +2,10 @@ package sprites.rooms;
 import sprites.*;
 import main.XML;
 import main.XMLNode;
-import java.awt.Color;
+
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Tile extends Sprite {
     final static int TILE_WIDTH_IN_PIXELS = 32;
@@ -23,11 +25,11 @@ public class Tile extends Sprite {
     public void changeStatus(TileState newstatus) {status=newstatus;}
 
     //get tile id from color of pixel (used when loading Room from .bmp)
-    public static int getTileIDFromColor(Color c) {
+    public static int getTileIDFromColor(int c) {
         List<XMLNode> tilesXML = tileData.getRoot().getChildrenWithKey("tile");
         for (XMLNode t : tilesXML) {
             String colorValue = t.getChildWithKey("color").getValue();
-            if (Long.decode(colorValue)==c.getRGB()) {
+            if (Long.decode(colorValue)==c) {
                 return Integer.parseInt(t.getAttributeWithName("id"));
             }
         }
@@ -39,6 +41,13 @@ public class Tile extends Sprite {
         super(px,py,sx,sy);
         tileID = tID;
         status = TileState.NORMAL;
+    }
+    @Override public void draw(int offsetX,int offsetY,Graphics g) {
+        super.draw(offsetX,offsetY,g);
+        g.setColor(Color.BLACK);
+        if (tileID==0) {g.setColor(Color.GREEN);}
+        System.out.println("yaya");
+        g.fillRect(offsetX + positionX, offsetY + positionY, sizeX, sizeY);
     }
 
     //later on, will handle grabbing tile data from a text file.
