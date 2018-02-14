@@ -29,6 +29,9 @@ class Room {
 		System.out.println("Initializing rooms...");
 		rooms = new Room[ROOM_AMOUNT];
 		for (int r = 0;r<ROOM_AMOUNT;r++) {
+			File bmpFile = new File("Resources/Rooms/room_"+String.parseString(r)+".bmp");
+			BufferedImage image = ImageIO.read(bmpFile);
+			
 			Tile[][] tiles_ = new Tile[16][16];
 			for (int i = 0;i<16;i++) {
 				for (int j = 0;j<16;j++) {
