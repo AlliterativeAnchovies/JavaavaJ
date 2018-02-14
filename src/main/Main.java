@@ -24,6 +24,7 @@ class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setBounds(30, 30,512, 512);
         window.getContentPane().add(new Renderer());
+        window.getContentPane().validate();
         window.setVisible(true);
 
         //Initialize tiles and whatnots

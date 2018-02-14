@@ -30,9 +30,9 @@ public class Room {
     }
 
     public static void drawRooms(Graphics g) {
-        System.out.println("jjj");
+        //System.out.println("jjj");
         for (Room r : rooms) {
-            System.out.println(r.tiles);
+            //System.out.println(r.tiles);
             r.draw(offx, offy, g);
         }
     }
@@ -51,6 +51,7 @@ public class Room {
                 Tile[][] tiles_ = new Tile[wd][ht];
                 for (int i = 0; i < wd; i++) {
                     for (int j = 0; j < ht; j++) {
+                        int pixelvalue = image.getRGB(i,j);
                         tiles_[i][j] = new Tile(
                                 i * Tile.TILE_WIDTH_IN_PIXELS,
                                 j * Tile.TILE_HEIGHT_IN_PIXELS,

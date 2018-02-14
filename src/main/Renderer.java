@@ -13,7 +13,6 @@ public class Renderer extends JComponent {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println(Main.RENDER_READY);
         if (Main.RENDER_READY) {
             Room.drawRooms(g);
         }

@@ -26,10 +26,11 @@ public class Tile extends Sprite {
 
     //get tile id from color of pixel (used when loading Room from .bmp)
     public static int getTileIDFromColor(int c) {
-        List<XMLNode> tilesXML = tileData.getRoot().getChildrenWithKey("tile");
+        List<XMLNode> tilesXML = tileData.getRoot().getChildrenWithKey("Tile");
         for (XMLNode t : tilesXML) {
             String colorValue = t.getChildWithKey("color").getValue();
-            if (Long.decode(colorValue)==c) {
+            long cV = Long.decode(colorValue);
+            if (cV==Integer.toUnsignedLong(c)) {
                 return Integer.parseInt(t.getAttributeWithName("id"));
             }
         }
@@ -46,7 +47,7 @@ public class Tile extends Sprite {
         super.draw(offsetX,offsetY,g);
         g.setColor(Color.BLACK);
         if (tileID==0) {g.setColor(Color.GREEN);}
-        System.out.println("yaya");
+        //System.out.println("yaya");
         g.fillRect(offsetX + positionX, offsetY + positionY, sizeX, sizeY);
     }
 
