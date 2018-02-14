@@ -44,24 +44,24 @@ public class Room {
             File bmpFile = new File("Resources/Rooms/room_" + r + ".bmp");
             try {
                 BufferedImage image = ImageIO.read(bmpFile);
+
+                Tile[][] tiles_ = new Tile[image.getHeight()][image.getWidth()];
+                for (int i = 0; i < image.getWidth(); i++) {
+                    for (int j = 0; j < image.getHeight(); j++) {
+                        tiles_[i][j] = new Tile(
+                                i * Tile.TILE_WIDTH_IN_PIXELS,
+                                j * Tile.TILE_HEIGHT_IN_PIXELS,
+                                Tile.TILE_WIDTH_IN_PIXELS,
+                                Tile.TILE_HEIGHT_IN_PIXELS,
+                                0//tile id
+                        );
+                    }
+                }
+
+                rooms[r] = new Room(tiles_);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            Tile[][] tiles_ = new Tile[16][16];
-            for (int i = 0; i < 16; i++) {
-                for (int j = 0; j < 16; j++) {
-                    tiles_[i][j] = new Tile(
-                            i * Tile.TILE_WIDTH_IN_PIXELS,
-                            j * Tile.TILE_HEIGHT_IN_PIXELS,
-                            Tile.TILE_WIDTH_IN_PIXELS,
-                            Tile.TILE_HEIGHT_IN_PIXELS,
-                            0//tile id
-                    );
-                }
-            }
-            rooms[r] = new Room(tiles_);
         }
-
     }
 }
