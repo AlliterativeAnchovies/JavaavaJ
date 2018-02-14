@@ -14,6 +14,12 @@ class XML {
 		dummychildcolor = new XMLNode("color","0xff00ff00");
 		dummychild.addChild(dummychildcolor);
 		root.addChild(dummychild);
+		XMLNode dummychild2;
+		XMLNode dummychildcolor2;
+		dummychild2 = new XMLNode("Tile");
+		dummychild2.addAttribute("id","1");
+		dummychildcolor2 = new XMLNode("color","0xffff0000");
+		dummychild2.addChild(dummychildcolor2);
 	}
 	public XMLNode getRoot() {return root;}
 	public static void main(String[] args) {
