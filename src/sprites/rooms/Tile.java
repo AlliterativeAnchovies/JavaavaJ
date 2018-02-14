@@ -1,11 +1,14 @@
 package sprites.rooms;
 import sprites.*;
 import main.XML;
+import java.awt.Color;
+import java.util.*;
 
 public class Tile extends Sprite {
     final static int TILE_WIDTH_IN_PIXELS = 32;
     final static int TILE_HEIGHT_IN_PIXELS = 32;
     protected int tileID;
+    static XML tileData;
     public enum TileState {
         NORMAL
     }
@@ -17,13 +20,16 @@ public class Tile extends Sprite {
     public boolean isWall() {return tileID>=1000&&tileID<2000;}
     //change the status of the tile
     public void changeStatus(TileState newstatus) {status=newstatus;}
-    //returns the game width - in pixels!
-    public static int getGameWidthInPixels() {
-        return 512;
-    }
-    //returns the game height - in pixels!
-    public static int getGameHeightInPixels() {
-        return 512;
+
+    //get tile id from color of pixel (used when loading Room from .bmp)
+    public static int getTileIDFromColor(Color c) {
+        List<XMLNode> tilesXML = tileData.getRoot().getChildrenWithKey("tile");
+        for (XMLNode t : tilesXML) {
+            String colorValue = t.getChildWithKey("color").getValue();
+            if (Long.decode(colorValue)==c.getRGB()) {
+                return Integer.parseInt(t.getAttributeWithName("id"));
+            }
+        }
     }
 
     //creates a new tile
@@ -36,7 +42,7 @@ public class Tile extends Sprite {
     //later on, will handle grabbing tile data from a text file.
     public static void init() {
         System.out.println("Initializing tiles...");
-        XML tiledata = new XML("Resources/tiledata.xml");
+        tileData = new XML("Resources/tiledata.xml");
     }
 
 }

@@ -84,6 +84,19 @@ class XMLNode {
         }
         return null;
     }
+    List<XMLNode> getChildrenWithKey(String k) {
+        List<XMLNode> toReturn = new ArrayList<XMLNode>();
+        for (XMLNode x : children) {
+            if (x.key==k) {toReturn.add(x);}
+        }
+        return toReturn;
+    }
+    String getAttributeWithName(String n) {
+        for (Pair<String,String> a : attributes) {
+            if (a.x.equals(n)) {return a.y;}
+        }
+        return null;
+    }
     String getValue() {
         return value;
     }

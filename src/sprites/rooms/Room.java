@@ -45,6 +45,7 @@ public class Room {
             try {
                 BufferedImage image = ImageIO.read(bmpFile);
 
+
                 Tile[][] tiles_ = new Tile[image.getHeight()][image.getWidth()];
                 for (int i = 0; i < image.getWidth(); i++) {
                     for (int j = 0; j < image.getHeight(); j++) {

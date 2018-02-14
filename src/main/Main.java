@@ -22,7 +22,7 @@ class Main {
         //Initialize graphics
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(30, 30, Tile.getGameWidthInPixels(), Tile.getGameHeightInPixels());
+        window.setBounds(30, 30,512, 512);
         window.getContentPane().add(new Renderer());
         window.setVisible(true);
 
