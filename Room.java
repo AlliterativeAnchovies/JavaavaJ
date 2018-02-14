@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.BufferedImage;
 class Room {
 	public static Room[] rooms;
 	public static final int ROOM_AMOUNT = 1;
