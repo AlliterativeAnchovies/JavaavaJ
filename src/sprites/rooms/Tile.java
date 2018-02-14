@@ -1,6 +1,7 @@
 package sprites.rooms;
 import sprites.*;
 import main.XML;
+import main.XMLNode;
 import java.awt.Color;
 import java.util.*;
 
@@ -30,6 +31,7 @@ public class Tile extends Sprite {
                 return Integer.parseInt(t.getAttributeWithName("id"));
             }
         }
+        return -1;
     }
 
     //creates a new tile
