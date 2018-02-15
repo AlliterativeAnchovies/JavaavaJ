@@ -1,6 +1,29 @@
-<xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Tiles>
-	<Tile id="0">
+	<Comment>
+		So, just a warning that this is kind of a bare-minimum xml parser.
+		Here are some things to watch out for:
+		Don't use comments or the funcky question mark tags
+		Don't put less than or greater than signs anywhere except when starting a tag
+		Don't worry about escaping "s, it's smart enough to know when the quotes end
+		(actually, it's better to say that it's stupid enough to not understand why escaping
+		quotes would be necessary in the first place... hehehe)
+		Try to use as little whitespace as possible.  If you put weird whitespace inside tags,
+		I can guarantee you that things will break.
+		Sorry.
+		Hehe.
+		Also, it doesn't care about your linebreaks and tabs (like normal XML afaik) so
+		if you're passing in a string that needs that, then manually type in the \n and \t.
+		Finally, if you have a tag that, for whatever reason, both has children and has a value,
+		the value shouldd always come before the children.
+		
+		---------------------TL;DR----------------------
+		Don't use greater/less than signs except in tags
+		No comments or funky question mark tags
+		Don't use weird whitespace please...
+	</Comment>
+	<Tile id="0 ">
 		<Color>0xff00ff00</Color>
+		<Sprite>filepath here</Sprite>
 	</Tile>
 </Tiles>

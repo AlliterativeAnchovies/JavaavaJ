@@ -60,4 +60,5 @@ public class XMLNode {
     public String getValue() {
         return value;
     }
+    public void giveValue(String v) {value=v;}
 }
