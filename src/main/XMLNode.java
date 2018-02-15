@@ -40,14 +40,14 @@ public class XMLNode {
     }
     public XMLNode getChildWithKey(String k) {
         for (XMLNode x : children) {
-            if (x.key==k) {return x;}
+            if (x.key.equals(k)) {return x;}
         }
         return null;
     }
     public List<XMLNode> getChildrenWithKey(String k) {
         List<XMLNode> toReturn = new ArrayList<XMLNode>();
         for (XMLNode x : children) {
-            if (x.key==k) {toReturn.add(x);}
+            if (x.key.equals(k)) {toReturn.add(x);}
         }
         return toReturn;
     }

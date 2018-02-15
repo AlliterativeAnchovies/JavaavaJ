@@ -21,9 +21,15 @@
 		Don't use greater/less than signs except in tags
 		No comments or funky question mark tags
 		Don't use weird whitespace please...
+		Tags that have a value AND children should always put the value first
+			Ideally, though, you should just make the value its own child or attribute...
 	</Comment>
-	<Tile id="0 ">
+	<Tile id="0">
 		<Color>0xff00ff00</Color>
+		<Sprite>filepath here</Sprite>
+	</Tile>
+	<Tile id="1">
+		<Color>0xff000000</Color>
 		<Sprite>filepath here</Sprite>
 	</Tile>
 </Tiles>

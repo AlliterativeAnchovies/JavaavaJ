@@ -28,4 +28,8 @@
 		<Color>0xff00ff00</Color>
 		<Sprite>filepath here</Sprite>
 	</Tile>
+	<Tile id="1">
+		<Color>0xff000000</Color>
+		<Sprite>filepath here</Sprite>
+	</Tile>
 </Tiles>
