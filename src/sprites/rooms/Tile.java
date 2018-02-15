@@ -19,6 +19,7 @@ public class Tile extends Sprite {
         NORMAL
     }
     private TileState status;
+    List<Item> itemsOn;
 
     //returns true if the tile can be walked on by the player normally
     public boolean isFloor() {return tileID>=0&&tileID<1000;}
@@ -69,6 +70,13 @@ public class Tile extends Sprite {
     public static void init() {
         System.out.println("Initializing tiles...");
         tileData = new XML("Resources/tiledata.xml");
+    }
+
+    public List<Item> getItems() {
+        return itemsOn;
+    }
+    public void removeItem(Item toRemove) {
+        itemsOn.remove(toRemove);
     }
 
 }
