@@ -1,5 +1,7 @@
 package sprites;
 
+import main.XMLNode;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.HashMap;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import javax.imageio.ImageIO;
 
 public class Sprite {
@@ -25,7 +28,7 @@ public class Sprite {
     //screen will.
     //Always call super.draw from child classes' overriden draws
     public void draw(int offsetX,int offsetY,Graphics g) {
-        g.drawImage(getCurImage(),offsetX+positionX,offsetY+positionY,null);
+        g.drawImage(getCurImage(),offsetX+positionX,offsetY+positionY,sizeX,sizeY,null);
         curFrame=(curFrame+1)%(textureList.get(curState).length);//increment the frame
     }
 
@@ -40,6 +43,7 @@ public class Sprite {
         return textureList.get(curState)[curFrame];
     }
 
+    //creates a new sprite
     public Sprite(int px,int py,int sx,int sy,HashMap<String,Image[]> tlist) {
         positionX = px;
         positionY = py;
@@ -48,15 +52,41 @@ public class Sprite {
         curState = "Default";
         curFrame = 0;
         textureList = tlist;
-        /*File bmpFile = new File("Resources/Sprites/basicfloor.bmp");
-        textureList = new HashMap<String,Image[]>();
-        Image[] imageList = new Image[2];
-        try {
-            imageList[0] = ImageIO.read(bmpFile);
-            imageList[1] = ImageIO.read(new File("Resources/Sprites/basicwall.bmp"));
-        } catch (IOException e) {
-            e.printStackTrace();
+    }
+
+    //given some XML data, assuming it's in the standard form (see comment at bottom of file)
+    //then this will fill hashmapToFill with the sprite data.
+    public static void parseSpriteList(XMLNode t,HashMap<String,Image[]> hashmapToFill) {
+        List<XMLNode> allSpriteStates = t.getChildrenWithKey("SpriteList");
+        for (XMLNode spritestate : allSpriteStates) {
+            String nameofstate = spritestate.getAttributeWithName("state");
+            String[] filepaths = spritestate.getValue().split("\\|");
+            Image[] theImages = new Image[filepaths.length];
+            for (int i = 0;i<filepaths.length;i++) {
+                try {
+                    theImages[i] = ImageIO.read(new File("Resources/"+filepaths[i]));
+                } catch (IOException e) {
+                    System.out.println("Error!  It seems there is no "+filepaths[i]+" file in the Resources folder?");
+                }
+            }
+            hashmapToFill.put(nameofstate,theImages);
         }
-        textureList.put("Default",imageList);*/
     }
 }
+
+/*
+Standard form for XML sprite data:
+<SpriteList state="statename">
+    list/of/files.bmp|
+    seperated/by.bmp|
+    pipe/symbol
+</SpriteList>
+</SpriteList state="otherstate">
+    you/can/have.bmp|
+    as/many/states.bmp|
+    and/images/in/states.bmp|
+    as/you/want.bmp
+</SpriteList>
+It is important to note that the filepaths should NOT include "Resources".  As they are all resources,
+these paths represents paths local to the Resources folder.
+ */

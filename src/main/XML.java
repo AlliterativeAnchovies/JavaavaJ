@@ -7,6 +7,7 @@ import java.util.*;
 public class XML {
     private XMLNode root;
 
+    //this is the constructor.  It is magical, it will take in a filepath and turn it into XML data
     public XML(String filepath) {
         Scanner sc = null;
         try {
@@ -33,6 +34,8 @@ public class XML {
         root = xmldoc.getNextNode();
 
     }
+
+    //gets the root of the tree
     public XMLNode getRoot() {return root;}
 }
 

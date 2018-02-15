@@ -58,34 +58,14 @@ public class Tile extends Sprite {
             int idvalue = Integer.parseInt(t.getAttributeWithName("id"));
             if (idvalue==tID) {
                 //found the correct node!
-                List<XMLNode> allSpriteStates = t.getChildrenWithKey("SpriteList");
-                for (XMLNode spritestate : allSpriteStates) {
-                    String nameofstate = spritestate.getAttributeWithName("state");
-                    String[] filepaths = spritestate.getValue().split("\\|");
-                    Image[] theImages = new Image[filepaths.length];
-                    for (int i = 0;i<filepaths.length;i++) {
-                        try {
-                            theImages[i] = ImageIO.read(new File("Resources/"+filepaths[i]));
-                        } catch (IOException e) {
-                            System.out.println("Error!  It seems there is no "+filepaths[i]+" file in the Resources folder?");
-                        }
-                    }
-                    toReturn.put(nameofstate,theImages);
-                }
+                Sprite.parseSpriteList(t,toReturn);
                 break;
             }
         }
         return toReturn;
     }
-    /*Override public void draw(int offsetX,int offsetY,Graphics g) {
-        super.draw(offsetX,offsetY,g);
-        g.setColor(Color.BLACK);
-        if (tileID==0) {g.setColor(Color.GREEN);}
-        System.out.println("yaya");
-        g.fillRect(offsetX + positionX, offsetY + positionY, sizeX, sizeY);
-    }*/
 
-    //later on, will handle grabbing tile data from a text file.
+    //initializes all information needed for tiles
     public static void init() {
         System.out.println("Initializing tiles...");
         tileData = new XML("Resources/tiledata.xml");

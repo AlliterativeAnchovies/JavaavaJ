@@ -1,5 +1,8 @@
 package main;
 
+//this class is basically a stream.  It takes in a string and
+//turns it into XML data.  Used in XML.java.  Unlikely to be used elsewhere.
+
 public class XMLStringReader {
     private String instring;
     private int pointer;
@@ -114,6 +117,7 @@ public class XMLStringReader {
         return false;
     }
 
+    //parses the data to create the next XML node
     public XMLNode getNextNode() {
         XMLStringReader tagdata = new XMLStringReader(grabNextTag());
         int taginteriorstart = pointer;
