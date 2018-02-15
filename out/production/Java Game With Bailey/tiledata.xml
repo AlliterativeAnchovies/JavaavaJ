@@ -26,10 +26,16 @@
 	</Comment>
 	<Tile id="0">
 		<Color>0xff00ff00</Color>
-		<Sprite>filepath here</Sprite>
+		<SpriteList state="Default">
+			Sprites/basicfloor_0.bmp|
+			Sprites/basicfloor_1.bmp
+		</SpriteList>
+		<SpriteList state="Test">
+			Sprites/basicwall_0.bmp
+		</SpriteList>
 	</Tile>
-	<Tile id="1">
+	<Tile id="100">
 		<Color>0xff000000</Color>
-		<Sprite>filepath here</Sprite>
+		<SpriteList state="Default">Sprites/basicwall_0.bmp</SpriteList>
 	</Tile>
 </Tiles>

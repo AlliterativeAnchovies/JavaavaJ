@@ -20,7 +20,7 @@ public class XML {
             String str = sc.nextLine();
             theDoc = theDoc+str.trim();
         }
-        System.out.println(theDoc);
+        //System.out.println(theDoc);
         XMLStringReader xmldoc = new XMLStringReader(theDoc);
         try {
             xmldoc.find("<?xml",true);
