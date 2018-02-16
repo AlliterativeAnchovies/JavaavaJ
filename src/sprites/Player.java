@@ -13,7 +13,7 @@ public class Player extends Person {
         super(px,py,tlist);
     }
 
-    public Player getPlayer() {
+    public static Player getPlayer() {
         return player;
     }
 

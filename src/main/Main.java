@@ -33,6 +33,7 @@ class Main {
         window.getContentPane().add(renderer);
         window.getContentPane().validate();
         window.setVisible(true);
+        window.addKeyListener(new KeyboardSurfer());
 
         //Initialize tiles and whatnots
         Time.init();

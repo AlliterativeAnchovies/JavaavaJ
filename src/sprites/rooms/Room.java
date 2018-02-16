@@ -5,11 +5,18 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Room {
     public static Room[] rooms;
     public static final int ROOM_AMOUNT = 1;
     private Tile[][] tiles;
+    public static int curRoom = 0;
+
+    //gets the current room
+    public static Room getCurRoom() {
+        return rooms[curRoom];
+    }
 
     //creates a room from a tile array
     public Room(Tile[][] ts) {
@@ -31,11 +38,9 @@ public class Room {
         }
     }
 
-    //static method that handles rendering of all rooms
+    //static method that handles rendering the current room
     public static void drawRooms(int offsetx,int offsety,Graphics g) {
-        for (Room r : rooms) {
-            r.draw(offsetx, offsety, g);
-        }
+        getCurRoom().draw(offsetx,offsety,g);
     }
 
     //does all tile class-level initialization stuff.
@@ -68,4 +73,31 @@ public class Room {
             }
         }
     }
+
+    //get list of all tiles a person could be over (1 if perfectly on tile, 2 if perfect in 1 direc only, 4 if on a corner.
+    public static ArrayList<Tile> getTilesUnderPerson(int startx, int starty) {
+        //tiles are nicely ordered (in array) already, it's rather easy to grab the stuffs.
+        int grabx = startx/Tile.TILE_WIDTH_IN_PIXELS;
+        int graby = starty/Tile.TILE_HEIGHT_IN_PIXELS;
+        int grabx2 = (startx%Tile.TILE_WIDTH_IN_PIXELS==0)?-1:grabx+1;
+        int graby2 = (starty%Tile.TILE_HEIGHT_IN_PIXELS==0)?-1:graby+1;
+        ArrayList<Tile> toReturn = new ArrayList<Tile>();
+        toReturn.add(getCurRoom().getTile(grabx,graby));//add the one it's top left corner is on
+        if (grabx2!=-1) {//add the others
+            toReturn.add(getCurRoom().getTile(grabx2,graby));
+            if (graby2!=-1) {toReturn.add(getCurRoom().getTile(grabx2,graby2));}
+        }
+        if (graby2!=-1) {toReturn.add(getCurRoom().getTile(grabx,graby2));}
+        return toReturn;
+    }
+
+    public static boolean isMoveableLocation(int px,int py) {
+        ArrayList<Tile> tls = getTilesUnderPerson(px,py);
+        boolean toReturn = true;
+        for (Tile t : tls) {
+            toReturn = toReturn && t.isFloor();
+        }
+        return toReturn;
+    }
+
 }

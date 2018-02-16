@@ -1,6 +1,8 @@
 package sprites;
 import main.XML;
 import main.XMLNode;
+import sprites.rooms.Room;
+
 import java.util.ArrayList;
 import java.awt.*;
 import java.util.HashMap;
@@ -12,7 +14,10 @@ public class Person extends Sprite {
     public static ArrayList<Person> people;
     //changes position by (dx,dy) if it is a valid move
     public void move(int dx,int dy) {
-        //TO-DO MAKE METHOD
+        if (Room.isMoveableLocation(positionX+dx,positionY+dy)) {
+            positionX+=dx;
+            positionY+=dy;
+        }
     }
     //sets position to (nx,ny), does not care if it is a valid move or not
     public void setPosition(int nx,int ny) {
@@ -46,9 +51,11 @@ public class Person extends Sprite {
         Player.init(playerdata);
     }
 
+    //draws all people
     public static void drawPeople(int offsetX,int offsetY,Graphics g) {
         for (Person p : people) {
             p.draw(offsetX,offsetY,g);
         }
     }
+
 }
