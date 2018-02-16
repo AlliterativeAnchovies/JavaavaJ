@@ -30,6 +30,7 @@ class Main {
         window.setVisible(true);
 
         //Initialize tiles and whatnots
+        Time.init();
         Tile.init();
         Room.init();
 
@@ -58,6 +59,7 @@ class Main {
             //(whenever >=1 tick has passed, do an update)
             initialTime = currentTime;
             if (deltaU >= 1) {//If it's time for a new update, update
+                Time.tick();
                 update();
                 ticks++;
                 deltaU--;
