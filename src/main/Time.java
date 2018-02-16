@@ -8,6 +8,15 @@ public class Time {
                                             //if we're doing real time.  We'll probably not want to do real time,
                                             //so instead we can adjust this value (for example, if real time 1 min =
                                             //game time 5 min, then set this equal to 3600/5 = 720.)
+
+    //Create a timestamp
+    int instancehour;
+    int instanceminute;
+    public Time(int h,int m) {
+        instancehour = h;
+        instanceminute = m;
+    }
+
     //Sets the time to the listed inputs.
     static void setTime(int hour,int minute) {
         curhour = hour;
@@ -31,5 +40,35 @@ public class Time {
                 curhour++;
             }
         }
+    }
+
+    static int getHour() {return curhour;}
+    static int getCurminute() {return curminute;}
+
+    //Returns the time in format HH:MM
+    //For example, 8:07 is 08:07.
+    static String getTimeString() {
+        String minutestring = Integer.toString(curminute);
+        if (minutestring.length()<2) {minutestring="0"+minutestring;}
+        String hourstring = Integer.toString(curhour);
+        if (minutestring.length()<2) {hourstring="0"+hourstring;}
+        return hourstring+":"+minutestring;
+    }
+
+    //instance method to check if timestamp is the present.
+    boolean isPresent() {
+        return curhour==instancehour&&curminute==instanceminute;
+    }
+
+    //instance method to check if timestamp is the past.
+    boolean isPast() {
+        if (instancehour<curhour) {return true;}
+        else if (instancehour>curhour) {return false;}
+        else {return instanceminute<curminute;}
+    }
+
+    //instance method to check if timestamp is the future.
+    boolean isFuture() {
+        return !isPresent()&&!isPast();//I'm lazy
     }
 }

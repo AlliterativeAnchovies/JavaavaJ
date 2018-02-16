@@ -1,11 +1,11 @@
 package ai;
 import java.util.*;
 import sprites.rooms.Tile;
-import main.Pair;
+import main.Time;
 
 public class Directive {
-    private int startTime;
-    private int endTime;
+    private Time startTime;
+    private Time endTime;
     private String inflictedStatus;
     private List<Tile> path;//list of key tiles that have to be reached
                     //(they do not have to be contiguous - the class methods will
