@@ -1,6 +1,7 @@
 package main;
 
 import main.Renderer;
+import sprites.Person;
 import sprites.rooms.Room;
 import sprites.rooms.Tile;
 
@@ -16,6 +17,8 @@ class Main {
                                         //is used to prevent premature rendering before
                                         //the game is ready.
     static Renderer renderer;
+    static int screenwidth;
+    static int screenheight;
     //This is the function that the code enters
     public static void main(String[] args) {
         System.out.println("---Starting...---");
@@ -23,7 +26,9 @@ class Main {
         //Initialize graphics
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setBounds(30, 30,512, 512);
+        screenwidth = 32*32;
+        screenheight = 32*24;
+        window.setBounds(30, 30,screenwidth, screenheight);
         renderer = new Renderer();
         window.getContentPane().add(renderer);
         window.getContentPane().validate();
@@ -33,6 +38,7 @@ class Main {
         Time.init();
         Tile.init();
         Room.init();
+        Person.init();
 
 
         //I just took this controlflow code from stack overflow hehe

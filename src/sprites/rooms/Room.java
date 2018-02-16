@@ -10,8 +10,6 @@ public class Room {
     public static Room[] rooms;
     public static final int ROOM_AMOUNT = 1;
     private Tile[][] tiles;
-    private static int offx = 0;
-    private static int offy = 0;
 
     //creates a room from a tile array
     public Room(Tile[][] ts) {
@@ -34,9 +32,9 @@ public class Room {
     }
 
     //static method that handles rendering of all rooms
-    public static void drawRooms(Graphics g) {
+    public static void drawRooms(int offsetx,int offsety,Graphics g) {
         for (Room r : rooms) {
-            r.draw(offx, offy, g);
+            r.draw(offsetx, offsety, g);
         }
     }
 

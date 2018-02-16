@@ -21,6 +21,8 @@ public class Sprite {
     protected String curState;
     protected int curFrame;
 
+    final static int SPRITE_FRAME_RATE = 2;//how many frames before sprite updates texture;
+
     //handles drawing of Sprite.  Takes in an offset and a graphics
     //context.  The offset is used in cases where we want to scroll the screen -
     //the tile's absolute position shouldn't change, but its position relative to the
@@ -28,7 +30,7 @@ public class Sprite {
     //Always call super.draw from child classes' overriden draws
     public void draw(int offsetX,int offsetY,Graphics g) {
         g.drawImage(getCurImage(),offsetX+positionX,offsetY+positionY,sizeX,sizeY,null);
-        curFrame=(curFrame+1)%(textureList.get(curState).length);//increment the frame
+        curFrame=(curFrame+1)%(textureList.get(curState).length*SPRITE_FRAME_RATE);//increment the frame
     }
 
     //changes sprite state
@@ -39,7 +41,7 @@ public class Sprite {
 
     //returns current image of sprite
     public Image getCurImage() {
-        return textureList.get(curState)[curFrame];
+        return textureList.get(curState)[curFrame/SPRITE_FRAME_RATE];
     }
 
     //creates a new sprite

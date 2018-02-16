@@ -1,9 +1,15 @@
 package sprites;
-import sprites.*;
+import main.XML;
+import main.XMLNode;
+import java.util.ArrayList;
+import java.awt.*;
+import java.util.HashMap;
+
 
 public class Person extends Sprite {
     protected int health;
     protected int maxHealth;
+    public static ArrayList<Person> people;
     //changes position by (dx,dy) if it is a valid move
     public void move(int dx,int dy) {
         //TO-DO MAKE METHOD
@@ -26,8 +32,23 @@ public class Person extends Sprite {
         health-=damage;
     }
 
-    public Person(int px,int py) {
-        super(px,py,16,16,null);
-        //TO-DO make Persons have sprite lists as well.
+    public Person(int px, int py, HashMap<String,Image[]> tlist) {
+        super(px,py,32,32,tlist);
+        people.add(this);
+    }
+
+    static XMLNode npcXMLData;
+    public static void init() {
+        people = new ArrayList<Person>();
+        npcXMLData = (new XML("Resources/persondata.xml")).getRoot();
+        //initialize the player
+        XMLNode playerdata = npcXMLData.getChildWithKey("Player");
+        Player.init(playerdata);
+    }
+
+    public static void drawPeople(int offsetX,int offsetY,Graphics g) {
+        for (Person p : people) {
+            p.draw(offsetX,offsetY,g);
+        }
     }
 }

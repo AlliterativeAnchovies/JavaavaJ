@@ -49,11 +49,14 @@ public class Tile extends Sprite {
     }
 
     //given a tile id, it creates the textureset of said id by looking at the xml document.
-    //Note: while this method is perfectly efficient, it's currently being called in a really inefficient manner -
-    //instead of calling it once per distinct tileID, it is called once per tile!  But I'm too lazy to implement that :)
-    //will only do it later if it turns out that the inefficiencies cause a noticeable pain.
+    //note: whenever it counters a new id, it stores it in tiletexturesetlist so it doesn't have to search for it all over again.
+    private static HashMap<Integer,HashMap<String,Image[]>> tiletexturesetlist = new HashMap<Integer,HashMap<String,Image[]>>();
     public static HashMap<String,Image[]> getTileTexturesetFromID(int tID) {
-        HashMap<String,Image[]> toReturn = new HashMap<String,Image[]>();
+        HashMap<String,Image[]> toReturn = tiletexturesetlist.get(tID);
+        if (toReturn!=null) {
+            return toReturn;
+        }
+        else {toReturn = new HashMap<String,Image[]>();}
         List<XMLNode> tilesXML = tileData.getRoot().getChildrenWithKey("Tile");
         for (XMLNode t : tilesXML) {
             int idvalue = Integer.parseInt(t.getAttributeWithName("id"));
@@ -63,6 +66,7 @@ public class Tile extends Sprite {
                 break;
             }
         }
+        tiletexturesetlist.put(tID,toReturn);
         return toReturn;
     }
 

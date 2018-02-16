@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	<Player>
+		<SpriteList state="Default">
+			Sprites/AGPPideagleDying1.png|
+			Sprites/AGPPideagleDying2.png|
+			Sprites/AGPPideagleDying3.png|
+			Sprites/AGPPideagleDying4.png|
+			Sprites/AGPPideagleDying5.png|
+			Sprites/AGPPideagleDying6.png|
+			Sprites/AGPPideagleDying7.png|
+			Sprites/AGPPideagleDying8.png|
+			Sprites/AGPPideagleDying9.png|
+			Sprites/AGPPideagleDying10.png
+		</SpriteList>
+		<SpriteList state="Test">
+			Sprites/basicwall_0.bmp
+		</SpriteList>
+	</Player>
+</Root>

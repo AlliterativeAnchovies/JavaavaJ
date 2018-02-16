@@ -34,7 +34,7 @@
 			Sprites/basicwall_0.bmp
 		</SpriteList>
 	</Tile>
-	<Tile id="100">
+	<Tile id="1000">
 		<Color>0xff000000</Color>
 		<SpriteList state="Default">Sprites/basicwall_0.bmp</SpriteList>
 	</Tile>
