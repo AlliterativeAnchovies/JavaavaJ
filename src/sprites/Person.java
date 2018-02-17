@@ -72,9 +72,10 @@ public class Person extends Sprite {
             int posy = Integer.parseInt(pos.getAttributeWithName("y"));
             int room = Integer.parseInt(pos.getAttributeWithName("room"));
             String n = node.getAttributeWithName("name");
+            String xmlroutine = node.getChildWithKey("Routine").getAttributeWithName("file");
             HashMap<String,Image[]> hashmapToFill = new HashMap<String,Image[]>();
             Sprite.parseSpriteList(node,hashmapToFill);
-            NPC npcConcerned = new NPC(posx,posy,hashmapToFill,n,room);
+            NPC npcConcerned = new NPC(posx,posy,hashmapToFill,n,room,xmlroutine);
         }
     }
 

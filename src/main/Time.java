@@ -16,6 +16,11 @@ public class Time {
         instancehour = h;
         instanceminute = m;
     }
+    public Time(String s) {
+        String[] s_ = s.split(":");
+        instancehour = Integer.parseInt(s_[0]);
+        instanceminute = Integer.parseInt(s_[1]);
+    }
 
     //Sets the time to the listed inputs.
     static void setTime(int hour,int minute) {
@@ -42,12 +47,12 @@ public class Time {
         }
     }
 
-    static int getHour() {return curhour;}
-    static int getCurminute() {return curminute;}
+    public static int getHour() {return curhour;}
+    public static int getCurminute() {return curminute;}
 
     //Returns the time in format HH:MM
     //For example, 8:07 is 08:07.
-    static String getTimeString() {
+    public static String getTimeString() {
         String minutestring = Integer.toString(curminute);
         if (minutestring.length()<2) {minutestring="0"+minutestring;}
         String hourstring = Integer.toString(curhour);
@@ -56,19 +61,19 @@ public class Time {
     }
 
     //instance method to check if timestamp is the present.
-    boolean isPresent() {
+    public boolean isPresent() {
         return curhour==instancehour&&curminute==instanceminute;
     }
 
     //instance method to check if timestamp is the past.
-    boolean isPast() {
+    public boolean isPast() {
         if (instancehour<curhour) {return true;}
         else if (instancehour>curhour) {return false;}
         else {return instanceminute<curminute;}
     }
 
     //instance method to check if timestamp is the future.
-    boolean isFuture() {
+    public boolean isFuture() {
         return !isPresent()&&!isPast();//I'm lazy
     }
 }

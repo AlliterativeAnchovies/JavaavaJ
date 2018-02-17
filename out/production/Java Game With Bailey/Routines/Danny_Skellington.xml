@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	<Routine name="Default">
+		<Directive start="8:30" end="9:00">
+			<Say>
+				Man, imma dawg, man.|
+				Utter beast!|
+				Just like at my moves!|
+				Ooo yah, I got that groove!|
+				Mmm-hmm, imma beast.|
+				Best dancer south of Brazil, I am!|
+				Look out ladies, here I come!|
+				Rar.
+			</Say>
+		</Directive>
+	</Routine>
+</Root>
