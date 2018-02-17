@@ -73,13 +73,16 @@ public class Person extends Sprite {
     public static void update() {
         for (Person p : people) {
             //normalize their velocity
-            Pair<Double,Double> normalized = Physics.normalize(p.velocityX,p.velocityY);
-            p.velocityX = 4*normalized.x;//see, this is why C++ has the right idea with pointers.  Physics.normalize
-            p.velocityY = 4*normalized.y;//should ideally be void, and take in pointers to the velocity to change it!
-                                        //It would make this code much shorter and eliminate the need to use Pair
-                                        //and deal with the dumb 'generics can't use raw types' stuffs.
-                                        //(In all honesty, I'm starting to think Java doesn't want us to use raw types.
-                                        //Maybe its better if we use its Integer/Double classes everywhere instead?)
+            double magnitude = Physics.magnitude(p.velocityX,p.velocityY);
+            if (magnitude>5) {
+                Pair<Double,Double> normalized = Physics.normalize(p.velocityX,p.velocityY);
+                p.velocityX = normalized.x*5;
+                p.velocityY = normalized.y*5;
+            }
+            else {
+                p.velocityX *= 0.95;
+                p.velocityY *= 0.95;
+            }
             p.rawMove((int)p.velocityX,(int)p.velocityY);
         }
     }

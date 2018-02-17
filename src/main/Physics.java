@@ -6,14 +6,16 @@ public class Physics {
     //on how physicsy our game gets.  Since its top-down, this will probably
     //be a small class
     public static Pair<Double,Double> normalize(double a,double b) {
-        double denominator = a*a+b*b;
+        double denominator = magnitude(a,b);
         if (denominator==0) {
             //special case, the zero vector is, because it can't be normalized.  However, that's
             //kinda fine because for most purposes we want it to 'normalize' to the zero vector again
             //so we'll just do that.
             return new Pair<Double,Double>(0.0,0.0);
         }
-        double scalar = 1/Math.sqrt(denominator);
+        double scalar = 1/denominator;
         return new Pair<Double,Double>(scalar*a,scalar*b);
     }
+
+    public static double magnitude(double a,double b) {return Math.sqrt(a*a+b*b);}
 }
