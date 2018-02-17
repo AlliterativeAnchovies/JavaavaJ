@@ -2,6 +2,7 @@ package main;
 
 import main.Renderer;
 import sprites.Person;
+import sprites.Sprite;
 import sprites.rooms.Room;
 import sprites.rooms.Tile;
 
@@ -42,6 +43,7 @@ public class Main {
 
         //Initialize tiles and whatnots
         Time.init();
+        Sprite.init();
         Tile.init();
         Room.init();
         Person.init();

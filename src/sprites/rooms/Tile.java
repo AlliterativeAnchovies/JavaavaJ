@@ -11,8 +11,8 @@ import java.util.*;
 import java.util.List;
 
 public class Tile extends Sprite {
-    final static int TILE_WIDTH_IN_PIXELS = 32;
-    final static int TILE_HEIGHT_IN_PIXELS = 32;
+    public final static int TILE_WIDTH_IN_PIXELS = 32;
+    public final static int TILE_HEIGHT_IN_PIXELS = 32;
     protected int tileID;
     static XML tileData;
     public enum TileState {

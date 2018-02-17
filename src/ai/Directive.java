@@ -6,6 +6,7 @@ import sprites.rooms.Tile;
 import main.Time;
 import main.XMLNode;
 import main.Pair;
+import sprites.NPC;
 
 public class Directive {
     private Time startTime;
@@ -17,23 +18,25 @@ public class Directive {
     private List<List<String>> toMove;
     private List<List<String>> walkingSpeed;
     private int walkingprogress;
+    private List<Interrupt> interrupts;
 
 
     public Directive(XMLNode x) {
         //parses the xml tree to create directive
-        //the part of the tree this receives is  the <Directive> tags
+        //the part of the tree this receives is the <Directive> tags
         String s_ = x.getAttributeWithName("start");
         String e_ = x.getAttributeWithName("end");
         startTime = new Time(s_);
         endTime = new Time(e_);
         curGroup = 0;
-        //first handle all the talking stuffs
+        //load all of the sequential stuffs
         toSay = new ArrayList<>();
         talkingSpeed = new ArrayList<>();
         toMove = new ArrayList<>();
         walkingSpeed = new ArrayList<>();
         List<XMLNode> groups = x.getChildrenWithKey("Group");
         for (XMLNode g : groups) {
+            //load <Say> tags - these are for dialogue
             ArrayList<String> toSay_ = new ArrayList<>();
             ArrayList<String> talkingSpeed_ = new ArrayList<>();
             List<XMLNode> speech = g.getChildrenWithKey("Say");
@@ -47,7 +50,7 @@ public class Directive {
                 talkingSpeed_.addAll(durs);
                 toSay_.addAll(toAdd);
             }
-            //now handle the moving stuffs
+            //load <Move> tags - these are for raw moving
             List<XMLNode> loadedmoves = g.getChildrenWithKey("Move");
             ArrayList<String> toMove_ = new ArrayList<>();
             ArrayList<String> walkingSpeed_ = new ArrayList<>();
@@ -62,6 +65,12 @@ public class Directive {
         }
         talkingprogress = 0;
         walkingprogress = 0;
+        interrupts = new ArrayList<>();
+        //load the interrupts
+        List<XMLNode> loadedinterrupts = x.getChildrenWithKey("Interrupt");
+        for (XMLNode interrupt : loadedinterrupts) {
+            interrupts.add(new Interrupt(interrupt));
+        }
     }
 
     //returns a list of directions, of the form:
@@ -95,4 +104,49 @@ public class Directive {
 
     public Time getStartTime() {return startTime;}
     public Time getEndTime() {return endTime;}
+
+    //this checks if an interrupt was triggered and if so returns the
+    //string containing the new routine the NPC should swap to to handle
+    //this routine.
+    public String handleInterrupts(NPC directee) {
+        for (Interrupt i : interrupts) {
+            if (i.check(directee)) {
+                return i.getRoutineToChangeTo();
+            }
+        }
+        return "";
+    }
+}
+
+class Interrupt {
+    private List<String> viewTriggers;//if these objects enter the NPC's view, the interrupt will trigger
+    private String routineToChangeTo;//once triggered, it will change the NPC's routine to this
+
+    public Interrupt(XMLNode n) {
+        viewTriggers = new ArrayList<String>();
+        List<XMLNode> causes = n.getChildrenWithKey("Causes");
+        //first let's get all of the triggers
+        for (XMLNode c : causes) {
+            //check the view causes
+            List<XMLNode> viewcauses = c.getChildrenWithKey("Sees");
+            for (XMLNode v : viewcauses) {
+                viewTriggers.add(v.getAttributeWithName("thing"));
+            }
+        }
+        //now let's get the new routine if it is triggered
+        routineToChangeTo = n.getChildWithKey("Response").getAttributeWithName("name");
+    }
+
+    public String getRoutineToChangeTo() {return routineToChangeTo;}
+
+    //returns if the interrupt triggered or not
+    public boolean check(NPC directee) {
+        for (String viewTrigger : viewTriggers) {
+            if (directee.canSee(viewTrigger)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

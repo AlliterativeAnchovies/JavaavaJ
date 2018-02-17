@@ -4,6 +4,7 @@ import main.XMLNode;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.io.File;
@@ -20,6 +21,8 @@ public class Sprite {
     protected int sizeY;
     protected String curState;
     protected int curFrame;
+    protected String name;
+    public static List<Sprite> allSprites;
 
     final static int SPRITE_FRAME_RATE = 2;//how many frames before sprite updates texture;
 
@@ -61,6 +64,8 @@ public class Sprite {
         curState = "Default";
         curFrame = 0;
         textureList = tlist;
+        if (name==null) {name="";}
+        allSprites.add(this);
     }
 
     //given some XML data, assuming it's in the standard form (see comment at bottom of file)
@@ -80,6 +85,10 @@ public class Sprite {
             }
             hashmapToFill.put(nameofstate,theImages);
         }
+    }
+
+    public static void init() {
+        allSprites = new ArrayList<>();
     }
 
     public double getPositionX() {return positionX;}

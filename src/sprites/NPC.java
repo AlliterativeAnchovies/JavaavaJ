@@ -13,7 +13,6 @@ import main.Physics;
 
 public class NPC extends Person {
     private Routine routine;
-    private String name;
     private double destinationx;
     private double destinationy;
     private double movespeed;
@@ -40,9 +39,14 @@ public class NPC extends Person {
                 curMovingDirectiveForCallback.walkingCallback();
             }
         }
-
-        //handle directives
+        //handle interrupts
         Directive r = routine.getCurrentDirective();
+        String interrupted = r.handleInterrupts(this);
+        if (interrupted!="") {
+            routine.changeState(interrupted);
+            r = routine.getCurrentDirective();
+        }
+        //handle directives
         if (r==null) {return;}//has no directions
         List<Pair<String,String>> jobs = r.getDirections();
         for (Pair<String,String> j : jobs) {

@@ -39,11 +39,13 @@ public class Routine {
     public static Routine parseRoutine(String filepath) {
         XMLNode routine = (new XML(filepath)).getRoot();
         List<XMLNode> listofroutines = routine.getChildrenWithKey("Routine");
-        HashMap<String,Directive[]> toCreate = new HashMap<String,Directive[]>();
+        HashMap<String,Directive[]> toCreate = new HashMap<>();
+        //go through all the routines
         for (XMLNode r : listofroutines) {
             String routinename = r.getAttributeWithName("name");
             List<XMLNode> directives = r.getChildrenWithKey("Directive");
             Directive[] ds = new Directive[directives.size()];
+            //create the directives for the routine
             for (int i = 0;i<ds.length;i++) {
                 XMLNode relevant = directives.get(i);
                 Directive direc = new Directive(relevant);
@@ -53,6 +55,11 @@ public class Routine {
         }
         Routine toReturn = new Routine(toCreate);
         return toReturn;
+    }
+
+    //changes routine state
+    public void changeState(String to) {
+        curState = to;
     }
 
 }

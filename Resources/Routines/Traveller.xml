@@ -7,7 +7,28 @@
 					|
 					I'm scared of monsters.
 				</Say>
-				<Move deltax="0" deltay="200" speed="0.5"/>
+				<Move deltax="0" deltay="230" speed="0.5"/>
+			</Group>
+			<Interrupt>
+				<Causes>
+					<Sees thing="Slugsucker Jones"/>
+				</Causes>
+				<Response name="AttackMode"/>
+			</Interrupt>
+		</Directive>
+	</Routine>
+	<Routine name="AttackMode">
+		<Directive start="0:00" end="24:00">
+			<Group>
+				<Say seconds="1">
+					AHHH!  A monster!
+				</Say>
+			</Group>
+			<Group>
+				<Say seconds="2">
+					Die monster!
+				</Say>
+				<Attack thing="@cause"/>
 			</Group>
 		</Directive>
 	</Routine>

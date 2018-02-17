@@ -3,7 +3,7 @@ import main.Pair;
 import main.Physics;
 import main.XML;
 import main.XMLNode;
-import sprites.rooms.Room;
+import sprites.rooms.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +132,21 @@ public class Person extends Sprite {
         else {
             changeStateIfNeeded("Moving");
         }
+    }
+
+    //returns true if a Sprite with the name 's' can be seen by this person.
+    public boolean canSee(String s) {
+        List<Sprite> allsprites = Sprite.allSprites;
+        for (Sprite spr : allsprites) {
+            if (spr.name.equals(s)) {
+                //spr is what we're checking for!
+                //TODO actually check visibility, currently its just checkin' if its in a small radius
+                if (Physics.magnitude(positionX-spr.positionX,positionY-spr.positionY)<Tile.TILE_WIDTH_IN_PIXELS*3) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
