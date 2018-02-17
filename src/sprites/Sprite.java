@@ -81,6 +81,9 @@ public class Sprite {
             hashmapToFill.put(nameofstate,theImages);
         }
     }
+
+    public int getPositionX() {return positionX;}
+    public int getPositionY() {return positionY;}
 }
 
 /*

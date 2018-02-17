@@ -23,7 +23,7 @@
 	</Player>
 	<NPC name="Traveller">
 		<StartingPosition room="0" x="200" y="200"/>
-		<Routine file="Routines/Danny_Skellington.xml"/>
+		<Routine file="Routines/Traveller.xml"/>
 		<SpriteList state="Default">
 			Sprites/SRPG_Wizard_Forward.png|
 			Sprites/SRPG_Wizard_Step_Forward.png
@@ -59,7 +59,7 @@
 	</NPC>
 	<NPC name="Slugsucker Jones">
 		<StartingPosition room="0" x="530" y="500"/>
-		<Routine file="Routines/Danny_Skellington.xml"/>
+		<Routine file="Routines/Slugsucker_Jones.xml"/>
 		<SpriteList state="Default">
 			Sprites/SRPG_Slugsucker_Front.png|
 			Sprites/SRPG_Slugsucker_Front.png|

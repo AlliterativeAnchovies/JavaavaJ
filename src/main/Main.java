@@ -8,7 +8,7 @@ import sprites.rooms.Tile;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 
-class Main {
+public class Main {
     //-----debug constants
     static boolean RENDER_TIME = true;	//if true, will report data on how well
                                         //the program is adhering to the frame rate.
@@ -16,9 +16,14 @@ class Main {
     static boolean RENDER_READY = false;//true once everything has been loaded.
                                         //is used to prevent premature rendering before
                                         //the game is ready.
-    static Renderer renderer;
+    static boolean UPDATE_READY = false;//same deal as render_ready
+    public static Renderer renderer;
     static int screenwidth;
     static int screenheight;
+    public static final int UPS = 60;//gameloops per second
+    public static final int FPS = 60;//frame refreshes per second
+    public static int totalticks = 0;
+    public static int totalframes = 0;
     //This is the function that the code enters
     public static void main(String[] args) {
         System.out.println("---Starting...---");
@@ -47,8 +52,6 @@ class Main {
         //Comments are my own annotations, though + slightly tweaked
         //https://stackoverflow.com/questions/18283199/java-main-game-loop
         boolean running = true;
-        final int UPS = 60;//gameloops per second
-        final int FPS = 60;//frame refreshes per second
         long initialTime = System.nanoTime();
         final double timeU = 1000000000.0 / UPS;//effectively just scalar to make deltaU==1 imply
         final double timeF = 1000000000.0 / FPS;
@@ -65,15 +68,18 @@ class Main {
             deltaF += (currentTime - initialTime) / timeF;//calculates how many update ticks have passed
             //(whenever >=1 tick has passed, do an update)
             initialTime = currentTime;
-            if (deltaU >= 1) {//If it's time for a new update, update
+            if (deltaU >= 1 && UPDATE_READY) {//If it's time for a new update, update
                 Time.tick();
+                renderer.update();
                 update();
                 ticks++;
+                totalticks++;
                 deltaU--;
             }
             if (deltaF >= 1) {//refresh the screen
                 renderer.repaint();
                 frames++;
+                totalframes++;
                 deltaF--;
             }
 
@@ -95,5 +101,9 @@ class Main {
     public static void update() {
         //this handles game logic!
         Person.staticUpdate();
+    }
+
+    public static void rendererLoaded() {
+        UPDATE_READY = true;
     }
 }

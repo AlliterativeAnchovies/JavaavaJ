@@ -1,5 +1,7 @@
 package ai;
 import java.util.*;
+
+import main.Main;
 import sprites.rooms.Tile;
 import main.Time;
 import main.XMLNode;
@@ -17,13 +19,7 @@ public class Directive {
     private int talkingprogress;
     //Note: game should calculate how fast the NPC should walk such that,
     //assuming no interruptions, they reach the end of the path right at endTime.
-    //Note 2: Directives ideally should be defined in a data-driven manner (that is,
-    //the code reads them in from text/xml files)
 
-    //given the position of an npc, this will return a list of directions that the NPC should travel along (in the form
-    //of relative positions.  So if this returned [(1,0),(0,3)], the NPC would try to move 1 right and then 3 up.)
-    //Shouldn't give directions too far in ahead though, because it likely will have to recalculate paths.
-    //public List<int[]> getDirections(int x,int y) {return null;};
 
     public Directive(XMLNode x) {
         //parses the xml tree to create directive
@@ -40,13 +36,20 @@ public class Directive {
         talkingprogress = 0;
     }
 
+    //returns a list of directions, of the form:
+    // [<"Say","What to say...">,<"Move","1,2">,...]
+    // So a list of pairs where the first in pair is type of direction and the second
+    // is easily parseable material detailing the specifics.
     public List<Pair<String,String>> getDirections() {
         List<Pair<String,String>> toReturn = new ArrayList<Pair<String,String>>();
         if (toSay.size()>talkingprogress) {
             toReturn.add(new Pair<String,String>("Say",toSay.get(talkingprogress)));
-            talkingprogress++;
         }
         return toReturn;
+    }
+
+    public void talkingCallback() {
+        talkingprogress++;
     }
 
     public Time getStartTime() {return startTime;}

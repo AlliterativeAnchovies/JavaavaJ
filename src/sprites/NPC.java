@@ -8,6 +8,7 @@ import java.util.HashMap;
 import ai.Directive;
 import ai.Routine;
 import main.Pair;
+import main.Main;
 
 public class NPC extends Person {
     private Routine routine;
@@ -26,8 +27,10 @@ public class NPC extends Person {
         List<Pair<String,String>> jobs = r.getDirections();
         for (Pair<String,String> j : jobs) {
             //go through and perform all directions!
-            if (j.x.equals("Say")) {
-                System.out.println(j.y);
+            if (j.x.equals("Say")&&!isSpeaking) {
+                //System.out.println(j.y);
+                isSpeaking = true;
+                Main.renderer.makeSpeechBubble(this,r,j.y,1*Main.UPS);//one second long speech
             }
         }
     }

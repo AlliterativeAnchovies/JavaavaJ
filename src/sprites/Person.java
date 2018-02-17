@@ -19,6 +19,10 @@ public class Person extends Sprite {
     protected double velocityX;
     protected double velocityY;
     protected int roomIn;
+    protected boolean isSpeaking = false;
+
+    //stops talking
+    public void stopSpeaking() {isSpeaking=false;}
 
     //changes velocity by (dx,dy)
     public void move(int dx,int dy) {

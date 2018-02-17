@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	<Routine name="Default">
+		<Directive start="8:30" end="9:00">
+			<Say>
+				I'm scared of monsters.
+			</Say>
+		</Directive>
+	</Routine>
+</Root>
