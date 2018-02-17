@@ -39,12 +39,12 @@ public class XMLStringReader {
 
     //returns true if there are potentially more attributes to find
     private boolean pointToNextAttribute() {
-        if (pointer>=instring.length()) {
+        if (pointer+1>=instring.length()) {
             return false;
         }
         while (instring.charAt(pointer+1)==' ') {
             pointer++;
-            if (pointer>=instring.length()) {
+            if (pointer+1>=instring.length()) {
                 return false;
             }
         }
@@ -93,6 +93,9 @@ public class XMLStringReader {
     //points after the end of </tagname>, and returns the contents between pointer and </tagname>
     //assumes you are already inside of a tag.
     private String closeTag(String tagname) {
+        if (pointer - 2 >= 0 && instring.charAt(pointer - 2) == '/') {//self-closing tag
+            return "";
+        }
         int start = pointer;
         find("</"+tagname+">",false);
         int end = pointer;

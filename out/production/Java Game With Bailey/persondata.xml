@@ -22,7 +22,7 @@
 		</SpriteList>
 	</Player>
 	<NPC name="Traveller">
-		<StartingPosition room="0" x="200" y="200"></StartingPosition>
+		<StartingPosition room="0" x="200" y="200"/>
 		<SpriteList state="Default">
 			Sprites/SRPG_Wizard_Forward.png|
 			Sprites/SRPG_Wizard_Step_Forward.png
@@ -33,7 +33,7 @@
 		</SpriteList>
 	</NPC>
 	<NPC name="Danny Skellington">
-		<StartingPosition room="0" x="500" y="280"></StartingPosition>
+		<StartingPosition room="0" x="500" y="280"/>
 		<SpriteList state="Default">
 			Sprites/rCPAUndead.png|
 			Sprites/rCPAUndeadIdle2.png|
@@ -56,7 +56,7 @@
 		</SpriteList>
 	</NPC>
 	<NPC name="Slugsucker Jones">
-		<StartingPosition room="0" x="530" y="500"></StartingPosition>
+		<StartingPosition room="0" x="530" y="500"/>
 		<SpriteList state="Default">
 			Sprites/SRPG_Slugsucker_Front.png|
 			Sprites/SRPG_Slugsucker_Front.png|
