@@ -6,13 +6,12 @@
 				<Say seconds="1.5">
 					|
 					|
-					|
 					Imma monster.|
 					Grrr...
 				</Say>
 			</Group>
 			<Group>
-				<Move deltax="-300" deltay="0" speed="1"/>
+				<Move deltax="-330" deltay="0" speed="6"/>
 			</Group>
 		</Directive>
 	</Routine>

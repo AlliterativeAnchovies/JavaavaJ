@@ -95,8 +95,8 @@ public class Room {
         return toReturn;
     }
 
-    public static boolean isMoveableLocation(int px,int py) {
-        ArrayList<Tile> tls = getTilesUnderPerson(px,py);
+    public static boolean isMoveableLocation(double px,double py) {
+        ArrayList<Tile> tls = getTilesUnderPerson((int)px,(int)py);
         boolean toReturn = true;
         for (Tile t : tls) {
             toReturn = toReturn && t.isFloor();

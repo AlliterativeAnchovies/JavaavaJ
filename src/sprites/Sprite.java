@@ -14,8 +14,8 @@ import javax.imageio.ImageIO;
 public class Sprite {
     protected HashMap<String,Image[]> textureList;//different states are indexed by the strings, each state has an array
                                     //of animation frames
-    protected int positionX;
-    protected int positionY;
+    protected double positionX;
+    protected double positionY;
     protected int sizeX;
     protected int sizeY;
     protected String curState;
@@ -29,7 +29,7 @@ public class Sprite {
     //screen will.
     //Always call super.draw from child classes' overriden draws
     public void draw(int offsetX,int offsetY,Graphics g) {
-        g.drawImage(getCurImage(),offsetX+positionX,offsetY+positionY,sizeX,sizeY,null);
+        g.drawImage(getCurImage(),(int)(offsetX+positionX),(int)(offsetY+positionY),sizeX,sizeY,null);
         curFrame=(curFrame+1)%(textureList.get(curState).length*SPRITE_FRAME_RATE);//increment the frame
     }
 
@@ -53,7 +53,7 @@ public class Sprite {
     }
 
     //creates a new sprite
-    public Sprite(int px,int py,int sx,int sy,HashMap<String,Image[]> tlist) {
+    public Sprite(double px,double py,int sx,int sy,HashMap<String,Image[]> tlist) {
         positionX = px;
         positionY = py;
         sizeX = sx;
@@ -82,8 +82,8 @@ public class Sprite {
         }
     }
 
-    public int getPositionX() {return positionX;}
-    public int getPositionY() {return positionY;}
+    public double getPositionX() {return positionX;}
+    public double getPositionY() {return positionY;}
 }
 
 /*

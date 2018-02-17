@@ -5,9 +5,9 @@
 			<Group>
 				<Say seconds="1.5">
 					|
-					|
 					I'm scared of monsters.
 				</Say>
+				<Move deltax="0" deltay="200" speed="0.5"/>
 			</Group>
 		</Directive>
 	</Routine>

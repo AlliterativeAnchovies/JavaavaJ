@@ -29,8 +29,8 @@
 			Sprites/SRPG_Wizard_Step_Forward.png
 		</SpriteList>
 		<SpriteList state="Moving">
-			Sprites/SRPG_Wizard.png|
-			Sprites/SRPG_Wizard_Step.png
+			Sprites/SRPG_Wizard_Forward.png|
+			Sprites/SRPG_Wizard_Step_Forward.png
 		</SpriteList>
 	</NPC>
 	<NPC name="Danny Skellington">

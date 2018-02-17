@@ -26,21 +26,32 @@ public class Person extends Sprite {
     public void stopSpeaking() {isSpeaking=false;}
 
     //changes velocity by (dx,dy)
-    public void move(int dx,int dy) {
-        if (Room.isMoveableLocation(positionX+dx,positionY+dy)) {
+    public void move(double dx,double dy) {
+        if (Room.isMoveableLocation((positionX+dx),(positionY+dy))) {
             velocityX+=dx;
             velocityY+=dy;
         }
     }
+
+    //like move but caps velocity
+    public void moveCapped(double dx,double dy,double magcap) {
+        move(dx,dy);
+        double mag = Physics.magnitude(velocityX,velocityY);
+        if (mag>magcap) {
+            velocityX*=magcap/mag;
+            velocityY*=magcap/mag;
+        }
+    }
+
     //changes position by (dx,dy) if it is a valid move
-    private void rawMove(int dx,int dy) {
+    private void rawMove(double dx,double dy) {
         if (Room.isMoveableLocation(positionX+dx,positionY+dy)) {
             positionX+=dx;
             positionY+=dy;
         }
     }
     //sets position to (nx,ny), does not care if it is a valid move or not
-    public void setPosition(int nx,int ny) {
+    public void setPosition(double nx,double ny) {
         positionX = nx;
         positionY = ny;
     }
@@ -112,8 +123,8 @@ public class Person extends Sprite {
             velocityX *= 0.95;
             velocityY *= 0.95;
         }
-        rawMove((int)velocityX,(int)velocityY);
-        if (magnitude<1) {//if mag < 1, it's not moving.  Just stop it.
+        rawMove(velocityX,velocityY);
+        if (magnitude<0.1) {//if mag < 0.1, it's not really moving.  Just stop it.
             velocityX = 0;
             velocityY = 0;
             changeStateIfNeeded("Default");

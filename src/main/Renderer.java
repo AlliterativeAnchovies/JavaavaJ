@@ -86,6 +86,6 @@ class SpeechBubble {
 
     public void draw(int offsetx,int offsety,Graphics g) {
         g.setFont(new Font("monospaced", Font.PLAIN,16));
-        g.drawString(contents,offsetx+callbackperson.getPositionX(),offsety+callbackperson.getPositionY());
+        g.drawString(contents,(int)(offsetx+callbackperson.getPositionX()),(int)(offsety+callbackperson.getPositionY()));
     }
 }

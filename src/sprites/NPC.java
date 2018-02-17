@@ -14,8 +14,8 @@ import main.Physics;
 public class NPC extends Person {
     private Routine routine;
     private String name;
-    private int destinationx;
-    private int destinationy;
+    private double destinationx;
+    private double destinationy;
     private double movespeed;
     private Directive curMovingDirectiveForCallback;
     public NPC(int px,int py,HashMap<String,Image[]> tlist,String n,int room,String xmlroutinepath) {
@@ -32,9 +32,11 @@ public class NPC extends Person {
         if (isMoving) {
             //TODO pathfinding
             Pair<Double,Double> movedirec = Physics.normalize(destinationx-positionX,destinationy-positionY);
-            move((int)(movespeed*movedirec.x),(int)(movespeed*movedirec.y));
-            if (Physics.magnitude(destinationx-positionX,destinationy-positionY)<32) {
+            moveCapped((movespeed*movedirec.x),(movespeed*movedirec.y),movespeed);
+            if (Physics.magnitude(destinationx-positionX,destinationy-positionY)<8) {
                 isMoving = false;
+                velocityX=0;
+                velocityY=0;
                 curMovingDirectiveForCallback.walkingCallback();
             }
         }
