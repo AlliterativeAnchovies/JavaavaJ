@@ -28,6 +28,10 @@
 		<Color>0xff00ff00</Color>
 		<SpriteList state="Default">
 			Sprites/basicfloor_0.bmp|
+			Sprites/basicfloor_0.bmp|
+			Sprites/basicfloor_0.bmp|
+			Sprites/basicfloor_1.bmp|
+			Sprites/basicfloor_1.bmp|
 			Sprites/basicfloor_1.bmp
 		</SpriteList>
 		<SpriteList state="Test">

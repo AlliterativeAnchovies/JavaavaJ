@@ -21,4 +21,54 @@
 			Sprites/AGPStupidEagleStep3.png
 		</SpriteList>
 	</Player>
+	<NPC name="Traveller">
+		<StartingPosition room="0" x="200" y="200"></StartingPosition>
+		<SpriteList state="Default">
+			Sprites/SRPG_Wizard_Forward.png|
+			Sprites/SRPG_Wizard_Step_Forward.png
+		</SpriteList>
+		<SpriteList state="Moving">
+			Sprites/SRPG_Wizard.png|
+			Sprites/SRPG_Wizard_Step.png
+		</SpriteList>
+	</NPC>
+	<NPC name="Danny Skellington">
+		<StartingPosition room="0" x="500" y="280"></StartingPosition>
+		<SpriteList state="Default">
+			Sprites/rCPAUndead.png|
+			Sprites/rCPAUndeadIdle2.png|
+			Sprites/SRPG_Undead_Back.png|
+			Sprites/SRPG_Undead_Back_Step.png|
+			Sprites/SRPG_Undead_Right.png|
+			Sprites/SRPG_Undead_Right_Step.png|
+			Sprites/SRPG_Undead_Front.png|
+			Sprites/SRPG_Undead_Front_Step.png
+		</SpriteList>
+		<SpriteList state="Moving">
+			Sprites/rCPAUndead.png|
+			Sprites/rCPAUndeadIdle2.png|
+			Sprites/SRPG_Undead_Back.png|
+			Sprites/SRPG_Undead_Back_Step.png|
+			Sprites/SRPG_Undead_Right.png|
+			Sprites/SRPG_Undead_Right_Step.png|
+			Sprites/SRPG_Undead_Front.png|
+			Sprites/SRPG_Undead_Front_Step.png
+		</SpriteList>
+	</NPC>
+	<NPC name="Slugsucker Jones">
+		<StartingPosition room="0" x="530" y="500"></StartingPosition>
+		<SpriteList state="Default">
+			Sprites/SRPG_Slugsucker_Front.png|
+			Sprites/SRPG_Slugsucker_Front.png|
+			Sprites/SRPG_Slugsucker_Front_Step.png|
+			Sprites/SRPG_Slugsucker_Front_Step.png
+		</SpriteList>
+		<SpriteList state="Moving">
+			Sprites/SRPG_Slugsucker_Left.png|
+			Sprites/SRPG_Slugsucker_Left.png|
+			Sprites/SRPG_Slugsucker_Left_Step.png|
+			Sprites/SRPG_Slugsucker_Left_Step.png
+		</SpriteList>
+	</NPC>
+	
 </Root>

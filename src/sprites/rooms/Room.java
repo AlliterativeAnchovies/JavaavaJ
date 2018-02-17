@@ -11,7 +11,11 @@ public class Room {
     public static Room[] rooms;
     public static final int ROOM_AMOUNT = 1;
     private Tile[][] tiles;
-    public static int curRoom = 0;
+    private static int curRoom = 0;
+
+    public static int getRoomID() {
+        return curRoom;
+    }
 
     //gets the current room
     public static Room getCurRoom() {

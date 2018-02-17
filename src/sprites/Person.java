@@ -6,7 +6,9 @@ import main.XMLNode;
 import sprites.rooms.Room;
 
 import java.util.ArrayList;
-import java.awt.*;
+import java.util.List;
+import java.awt.Image;
+import java.awt.Graphics;
 import java.util.HashMap;
 
 
@@ -16,6 +18,8 @@ public class Person extends Sprite {
     private static ArrayList<Person> people;
     protected double velocityX;
     protected double velocityY;
+    protected int roomIn;
+
     //changes velocity by (dx,dy)
     public void move(int dx,int dy) {
         if (Room.isMoveableLocation(positionX+dx,positionY+dy)) {
@@ -60,38 +64,56 @@ public class Person extends Sprite {
         //initialize the player
         XMLNode playerdata = npcXMLData.getChildWithKey("Player");
         Player.init(playerdata);
+        //initialize the npcs
+        List<XMLNode> npcdata = npcXMLData.getChildrenWithKey("NPC");
+        for (XMLNode node : npcdata) {
+            XMLNode pos = node.getChildWithKey("StartingPosition");
+            int posx = Integer.parseInt(pos.getAttributeWithName("x"));
+            int posy = Integer.parseInt(pos.getAttributeWithName("y"));
+            int room = Integer.parseInt(pos.getAttributeWithName("room"));
+            String n = node.getAttributeWithName("name");
+            HashMap<String,Image[]> hashmapToFill = new HashMap<String,Image[]>();
+            Sprite.parseSpriteList(node,hashmapToFill);
+            NPC npcConcerned = new NPC(posx,posy,hashmapToFill,n,room);
+        }
     }
 
     //draws all people
     public static void drawPeople(int offsetX,int offsetY,Graphics g) {
         for (Person p : people) {
-            p.draw(offsetX,offsetY,g);
+            if (p.roomIn==Room.getRoomID()) {//only draw if they're in the current room
+                p.draw(offsetX, offsetY, g);
+            }
         }
     }
 
     //update function, called every tick
-    public static void update() {
+    public static void staticUpdate() {
         for (Person p : people) {
-            //normalize their velocity
-            double magnitude = Physics.magnitude(p.velocityX,p.velocityY);
-            if (magnitude>5) {
-                Pair<Double,Double> normalized = Physics.normalize(p.velocityX,p.velocityY);
-                p.velocityX = normalized.x*5;
-                p.velocityY = normalized.y*5;
-            }
-            else {
-                p.velocityX *= 0.95;
-                p.velocityY *= 0.95;
-            }
-            p.rawMove((int)p.velocityX,(int)p.velocityY);
-            if (magnitude<1) {//if mag < 1, it's not moving.  Just stop it.
-                p.velocityX = 0;
-                p.velocityY = 0;
-                p.changeStateIfNeeded("Default");
-            }
-            else {
-                p.changeStateIfNeeded("Moving");
-            }
+            p.update();
+        }
+    }
+
+    protected void update() {
+        //normalize their velocity
+        double magnitude = Physics.magnitude(velocityX,velocityY);
+        if (magnitude>5) {
+            Pair<Double,Double> normalized = Physics.normalize(velocityX,velocityY);
+            velocityX = normalized.x*5;
+            velocityY = normalized.y*5;
+        }
+        else {
+            velocityX *= 0.95;
+            velocityY *= 0.95;
+        }
+        rawMove((int)velocityX,(int)velocityY);
+        if (magnitude<1) {//if mag < 1, it's not moving.  Just stop it.
+            velocityX = 0;
+            velocityY = 0;
+            changeStateIfNeeded("Default");
+        }
+        else {
+            changeStateIfNeeded("Moving");
         }
     }
 
