@@ -11,10 +11,14 @@
 			Sprites/AGPPideagleDying7.png|
 			Sprites/AGPPideagleDying8.png|
 			Sprites/AGPPideagleDying9.png|
+			Sprites/AGPPideagleDying10.png|
+			Sprites/AGPPideagleDying10.png|
+			Sprites/AGPPideagleDying10.png|
 			Sprites/AGPPideagleDying10.png
 		</SpriteList>
-		<SpriteList state="Test">
-			Sprites/basicwall_0.bmp
+		<SpriteList state="Moving">
+			Sprites/AGPStupidEagleStep2.png|
+			Sprites/AGPStupidEagleStep3.png
 		</SpriteList>
 	</Player>
 </Root>

@@ -84,6 +84,14 @@ public class Person extends Sprite {
                 p.velocityY *= 0.95;
             }
             p.rawMove((int)p.velocityX,(int)p.velocityY);
+            if (magnitude<1) {//if mag < 1, it's not moving.  Just stop it.
+                p.velocityX = 0;
+                p.velocityY = 0;
+                p.changeStateIfNeeded("Default");
+            }
+            else {
+                p.changeStateIfNeeded("Moving");
+            }
         }
     }
 

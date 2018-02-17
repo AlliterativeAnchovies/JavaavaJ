@@ -33,10 +33,18 @@ public class Sprite {
         curFrame=(curFrame+1)%(textureList.get(curState).length*SPRITE_FRAME_RATE);//increment the frame
     }
 
-    //changes sprite state
+    //changes sprite state (also resets frame on so it doesn't start in the middle of an animation)
     public void changeState(String newstate) {
         curState = newstate;
         curFrame = 0;
+    }
+
+    //changes the state, but only if its not already in the state. (so as to avoid constantly changing to a
+    //certain state every update loop and having that reset the frame)
+    public void changeStateIfNeeded(String newstate) {
+        if (!curState.equals(newstate)) {
+            changeState(newstate);
+        }
     }
 
     //returns current image of sprite
