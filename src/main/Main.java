@@ -94,5 +94,6 @@ class Main {
 
     public static void update() {
         //this handles game logic!
+        Person.update();
     }
 }

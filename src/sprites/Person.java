@@ -1,4 +1,6 @@
 package sprites;
+import main.Pair;
+import main.Physics;
 import main.XML;
 import main.XMLNode;
 import sprites.rooms.Room;
@@ -11,9 +13,18 @@ import java.util.HashMap;
 public class Person extends Sprite {
     protected int health;
     protected int maxHealth;
-    public static ArrayList<Person> people;
-    //changes position by (dx,dy) if it is a valid move
+    private static ArrayList<Person> people;
+    protected double velocityX;
+    protected double velocityY;
+    //changes velocity by (dx,dy)
     public void move(int dx,int dy) {
+        if (Room.isMoveableLocation(positionX+dx,positionY+dy)) {
+            velocityX+=dx;
+            velocityY+=dy;
+        }
+    }
+    //changes position by (dx,dy) if it is a valid move
+    private void rawMove(int dx,int dy) {
         if (Room.isMoveableLocation(positionX+dx,positionY+dy)) {
             positionX+=dx;
             positionY+=dy;
@@ -55,6 +66,21 @@ public class Person extends Sprite {
     public static void drawPeople(int offsetX,int offsetY,Graphics g) {
         for (Person p : people) {
             p.draw(offsetX,offsetY,g);
+        }
+    }
+
+    //update function, called every tick
+    public static void update() {
+        for (Person p : people) {
+            //normalize their velocity
+            Pair<Double,Double> normalized = Physics.normalize(p.velocityX,p.velocityY);
+            p.velocityX = 4*normalized.x;//see, this is why C++ has the right idea with pointers.  Physics.normalize
+            p.velocityY = 4*normalized.y;//should ideally be void, and take in pointers to the velocity to change it!
+                                        //It would make this code much shorter and eliminate the need to use Pair
+                                        //and deal with the dumb 'generics can't use raw types' stuffs.
+                                        //(In all honesty, I'm starting to think Java doesn't want us to use raw types.
+                                        //Maybe its better if we use its Integer/Double classes everywhere instead?)
+            p.rawMove((int)p.velocityX,(int)p.velocityY);
         }
     }
 
