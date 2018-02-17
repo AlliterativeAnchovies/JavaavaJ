@@ -19,9 +19,10 @@ public class Person extends Sprite {
     protected double velocityX;
     protected double velocityY;
     protected int roomIn;
-    protected boolean isSpeaking = false;
+    protected boolean isSpeaking = false;//these 2 are for
+    protected boolean isMoving = false;//directives
 
-    //stops talking
+    //these are called when they have completed a directive task
     public void stopSpeaking() {isSpeaking=false;}
 
     //changes velocity by (dx,dy)

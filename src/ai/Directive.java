@@ -10,16 +10,13 @@ import main.Pair;
 public class Directive {
     private Time startTime;
     private Time endTime;
-    private List<Tile> path;//list of key tiles that have to be reached
-                    //(they do not have to be contiguous - the class methods will
-                    //be in charge of giving contiguous directions)
-    private int progress;//keeps track of how many key points in the path the npc has reached so far
-                //(so it's an index for path)
-    private List<String> toSay;
+    private int curGroup;
+    private List<List<String>> toSay;
+    private List<List<String>> talkingSpeed;
     private int talkingprogress;
-    private List<String> talkingSpeed;
-    //Note: game should calculate how fast the NPC should walk such that,
-    //assuming no interruptions, they reach the end of the path right at endTime.
+    private List<List<String>> toMove;
+    private List<List<String>> walkingSpeed;
+    private int walkingprogress;
 
 
     public Directive(XMLNode x) {
@@ -29,20 +26,42 @@ public class Directive {
         String e_ = x.getAttributeWithName("end");
         startTime = new Time(s_);
         endTime = new Time(e_);
-        toSay = new ArrayList<String>();
+        curGroup = 0;
+        //first handle all the talking stuffs
+        toSay = new ArrayList<>();
         talkingSpeed = new ArrayList<>();
-        List<XMLNode> speech = x.getChildrenWithKey("Say");
-        for (XMLNode s : speech) {
-            List<String> toAdd = Arrays.asList(s.getValue().split("\\|"));
-            List<String> durs = new ArrayList<String>();
-            String durtoadd = s.getAttributeWithName("seconds");
-            for (String thisisdumb : toAdd) {//why doesn't java have a constructor to fill with default values?
-                durs.add(durtoadd);
+        toMove = new ArrayList<>();
+        walkingSpeed = new ArrayList<>();
+        List<XMLNode> groups = x.getChildrenWithKey("Group");
+        for (XMLNode g : groups) {
+            ArrayList<String> toSay_ = new ArrayList<>();
+            ArrayList<String> talkingSpeed_ = new ArrayList<>();
+            List<XMLNode> speech = g.getChildrenWithKey("Say");
+            for (XMLNode s : speech) {
+                List<String> toAdd = Arrays.asList(s.getValue().split("\\|"));
+                List<String> durs = new ArrayList<String>();
+                String durtoadd = s.getAttributeWithName("seconds");
+                for (String thisisdumb : toAdd) {//why doesn't java have a constructor to fill with default values?
+                    durs.add(durtoadd);
+                }
+                talkingSpeed_.addAll(durs);
+                toSay_.addAll(toAdd);
             }
-            talkingSpeed.addAll(durs);
-            toSay.addAll(toAdd);
+            //now handle the moving stuffs
+            List<XMLNode> loadedmoves = g.getChildrenWithKey("Move");
+            ArrayList<String> toMove_ = new ArrayList<>();
+            ArrayList<String> walkingSpeed_ = new ArrayList<>();
+            for (XMLNode m : loadedmoves) {
+                walkingSpeed_.add(m.getAttributeWithName("speed"));
+                toMove_.add(m.getAttributeWithName("deltax") + "," + m.getAttributeWithName("deltay"));
+            }
+            toSay.add(toSay_);
+            talkingSpeed.add(talkingSpeed_);
+            toMove.add(toMove_);
+            walkingSpeed.add(walkingSpeed_);
         }
         talkingprogress = 0;
+        walkingprogress = 0;
     }
 
     //returns a list of directions, of the form:
@@ -51,14 +70,27 @@ public class Directive {
     // is easily parseable material detailing the specifics.
     public List<Pair<String,String>> getDirections() {
         List<Pair<String,String>> toReturn = new ArrayList<Pair<String,String>>();
-        if (toSay.size()>talkingprogress) {
-            toReturn.add(new Pair<String,String>("Say",talkingSpeed.get(talkingprogress)+"|"+toSay.get(talkingprogress)));
+        boolean needsnewgroup = true;
+        if (toSay.size()>curGroup&&toSay.get(curGroup).size()>talkingprogress) {
+            toReturn.add(new Pair<>("Say",talkingSpeed.get(curGroup).get(talkingprogress)+"|"+toSay.get(curGroup).get(talkingprogress)));
+            needsnewgroup = false;
+        }
+        if (toMove.size()>curGroup&&toMove.get(curGroup).size()>walkingprogress) {
+            toReturn.add(new Pair<>("Move",walkingSpeed.get(curGroup).get(walkingprogress)+"|"+toMove.get(curGroup).get(walkingprogress)));
+            needsnewgroup = false;
+        }
+        if (needsnewgroup) {
+            curGroup++;
         }
         return toReturn;
     }
 
     public void talkingCallback() {
         talkingprogress++;
+    }
+
+    public void walkingCallback() {
+        walkingprogress++;
     }
 
     public Time getStartTime() {return startTime;}

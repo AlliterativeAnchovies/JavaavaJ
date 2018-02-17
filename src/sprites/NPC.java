@@ -9,10 +9,15 @@ import ai.Directive;
 import ai.Routine;
 import main.Pair;
 import main.Main;
+import main.Physics;
 
 public class NPC extends Person {
     private Routine routine;
     private String name;
+    private int destinationx;
+    private int destinationy;
+    private double movespeed;
+    private Directive curMovingDirectiveForCallback;
     public NPC(int px,int py,HashMap<String,Image[]> tlist,String n,int room,String xmlroutinepath) {
         super(px,py,tlist);
         name = n;
@@ -22,6 +27,19 @@ public class NPC extends Person {
 
     @Override protected void update() {
         super.update();
+
+        //handle following directives
+        if (isMoving) {
+            //TODO pathfinding
+            Pair<Double,Double> movedirec = Physics.normalize(destinationx-positionX,destinationy-positionY);
+            move((int)(movespeed*movedirec.x),(int)(movespeed*movedirec.y));
+            if (Physics.magnitude(destinationx-positionX,destinationy-positionY)<32) {
+                isMoving = false;
+                curMovingDirectiveForCallback.walkingCallback();
+            }
+        }
+
+        //handle directives
         Directive r = routine.getCurrentDirective();
         if (r==null) {return;}//has no directions
         List<Pair<String,String>> jobs = r.getDirections();
@@ -36,6 +54,15 @@ public class NPC extends Person {
                     toWrite+=info[i];
                 }
                 Main.renderer.makeSpeechBubble(this, r, toWrite, (int) (Double.parseDouble(info[0]) * Main.UPS));
+            }
+            else if (j.x.equals("Move")&&!isMoving) {
+                isMoving = true;
+                String[] info_ = j.y.split("\\|");
+                String[] info = info_[1].split(",");
+                destinationx = positionX+Integer.parseInt(info[0]);
+                destinationy = positionY+Integer.parseInt(info[1]);
+                movespeed = Double.parseDouble(info_[0]);
+                curMovingDirectiveForCallback = r;
             }
         }
     }

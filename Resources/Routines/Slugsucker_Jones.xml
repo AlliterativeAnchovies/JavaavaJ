@@ -2,13 +2,18 @@
 <Root>
 	<Routine name="Default">
 		<Directive start="8:30" end="9:00">
-			<Say seconds="1.5">
-				|
-				|
-				|
-				Imma monster.|
-				Grrr...
-			</Say>
+			<Group>
+				<Say seconds="1.5">
+					|
+					|
+					|
+					Imma monster.|
+					Grrr...
+				</Say>
+			</Group>
+			<Group>
+				<Move deltax="-300" deltay="0" speed="1"/>
+			</Group>
 		</Directive>
 	</Routine>
 </Root>
