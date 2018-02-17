@@ -30,7 +30,12 @@ public class NPC extends Person {
             if (j.x.equals("Say")&&!isSpeaking) {
                 //System.out.println(j.y);
                 isSpeaking = true;
-                Main.renderer.makeSpeechBubble(this,r,j.y,1*Main.UPS);//one second long speech
+                String[] info = j.y.split("\\|");
+                String toWrite = "";
+                for (int i = 1;i<info.length;i++) {
+                    toWrite+=info[i];
+                }
+                Main.renderer.makeSpeechBubble(this, r, toWrite, (int) (Double.parseDouble(info[0]) * Main.UPS));
             }
         }
     }

@@ -2,7 +2,11 @@
 <Root>
 	<Routine name="Default">
 		<Directive start="8:30" end="9:00">
-			<Say>
+			<Say seconds="2">
+				|
+				|
+				|
+				|
 				Man, imma dawg, man.|
 				Utter beast!|
 				Just look at my moves!|

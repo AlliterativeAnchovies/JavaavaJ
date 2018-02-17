@@ -68,7 +68,10 @@ public class Main {
             deltaF += (currentTime - initialTime) / timeF;//calculates how many update ticks have passed
             //(whenever >=1 tick has passed, do an update)
             initialTime = currentTime;
-            if (deltaU >= 1 && UPDATE_READY) {//If it's time for a new update, update
+            if (!UPDATE_READY) {
+                deltaU = 0;
+            }
+            if (deltaU >= 1) {//If it's time for a new update, update
                 Time.tick();
                 renderer.update();
                 update();

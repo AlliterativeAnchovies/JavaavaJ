@@ -22,7 +22,6 @@ public class Renderer extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (Main.RENDER_READY) {
-            Main.rendererLoaded();
             int offsetx = 0;
             int offsety = 0;
             Room.drawRooms(offsetx,offsety,g);
@@ -34,6 +33,7 @@ public class Renderer extends JComponent {
             for (SpeechBubble s : bubbles) {
                 s.draw(offsetx,offsety,g);
             }
+            Main.rendererLoaded();
         }
     }
 

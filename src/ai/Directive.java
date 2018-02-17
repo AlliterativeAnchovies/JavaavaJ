@@ -17,6 +17,7 @@ public class Directive {
                 //(so it's an index for path)
     private List<String> toSay;
     private int talkingprogress;
+    private List<String> talkingSpeed;
     //Note: game should calculate how fast the NPC should walk such that,
     //assuming no interruptions, they reach the end of the path right at endTime.
 
@@ -29,9 +30,17 @@ public class Directive {
         startTime = new Time(s_);
         endTime = new Time(e_);
         toSay = new ArrayList<String>();
+        talkingSpeed = new ArrayList<>();
         List<XMLNode> speech = x.getChildrenWithKey("Say");
         for (XMLNode s : speech) {
-            toSay.addAll(Arrays.asList(s.getValue().split("\\|")));
+            List<String> toAdd = Arrays.asList(s.getValue().split("\\|"));
+            List<String> durs = new ArrayList<String>();
+            String durtoadd = s.getAttributeWithName("seconds");
+            for (String thisisdumb : toAdd) {//why doesn't java have a constructor to fill with default values?
+                durs.add(durtoadd);
+            }
+            talkingSpeed.addAll(durs);
+            toSay.addAll(toAdd);
         }
         talkingprogress = 0;
     }
@@ -43,7 +52,7 @@ public class Directive {
     public List<Pair<String,String>> getDirections() {
         List<Pair<String,String>> toReturn = new ArrayList<Pair<String,String>>();
         if (toSay.size()>talkingprogress) {
-            toReturn.add(new Pair<String,String>("Say",toSay.get(talkingprogress)));
+            toReturn.add(new Pair<String,String>("Say",talkingSpeed.get(talkingprogress)+"|"+toSay.get(talkingprogress)));
         }
         return toReturn;
     }
