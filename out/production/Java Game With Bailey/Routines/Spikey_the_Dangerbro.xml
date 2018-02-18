@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	<Routine name="Default">
+		<Directive start="8:30" end="9:00">
+			<Group>
+				<Say seconds="1.5">
+					|
+					|
+					Pssst...|
+					Come talk to me...|
+				</Say>
+				<Say seconds="2">
+					.|
+					..|
+					...|
+					. . .|
+					Please?|
+					I'm lonely...|
+				</Say>
+			</Group>
+			<Group>
+				<Say seconds="2">
+					.|
+					..|
+					...|
+				</Say>
+			</Group>
+			<Interrupt>
+				<Causes>
+					<Sees thing="player:@"/>
+				</Causes>
+				<Response name="Chat"/>
+			</Interrupt>
+		</Directive>
+	</Routine>
+	<Routine name="Chat">
+		<Directive start="0:00" end="24:00">
+			<Group>
+				<Say seconds="1.5">
+					Hey, thanks for coming!
+					You can go now!
+				</Say>
+				<Say seconds="3">
+					I just wanted to demonstrate the fact that I can notice your presence!
+					...
+					You smell good.
+				</Say>
+			</Group>
+		</Directive>
+	</Routine>
+</Root>

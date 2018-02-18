@@ -15,6 +15,7 @@ public class Tile extends Sprite {
     public final static int TILE_HEIGHT_IN_PIXELS = 32;
     protected int tileID;
     static XML tileData;
+    public static List<Tile> allTiles;
     public enum TileState {
         NORMAL
     }
@@ -46,6 +47,7 @@ public class Tile extends Sprite {
         super(px,py,sx,sy,getTileTexturesetFromID(tID));
         tileID = tID;
         status = TileState.NORMAL;
+        allTiles.add(this);
     }
 
     //given a tile id, it creates the textureset of said id by looking at the xml document.
@@ -74,6 +76,7 @@ public class Tile extends Sprite {
     public static void init() {
         System.out.println("Initializing tiles...");
         tileData = new XML("Resources/tiledata.xml");
+        allTiles = new ArrayList<>();
     }
 
     public List<Item> getItems() {

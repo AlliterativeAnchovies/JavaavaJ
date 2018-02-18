@@ -11,7 +11,7 @@
 			</Group>
 			<Interrupt>
 				<Causes>
-					<Sees thing="Slugsucker Jones"/>
+					<Sees thing="person:Slugsucker Jones"/>
 				</Causes>
 				<Response name="AttackMode"/>
 			</Interrupt>

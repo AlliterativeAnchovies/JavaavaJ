@@ -1,6 +1,8 @@
 package main;
 
 import main.Renderer;
+import sprites.Item;
+import sprites.NPC;
 import sprites.Person;
 import sprites.Sprite;
 import sprites.rooms.Room;
@@ -41,12 +43,14 @@ public class Main {
         window.setVisible(true);
         window.addKeyListener(new KeyboardSurfer());
 
-        //Initialize tiles and whatnots
+        //Initialize classes
         Time.init();
         Sprite.init();
         Tile.init();
         Room.init();
-        Person.init();
+        NPC.init();//NPC must be init-ed before Person b/c Person.init() does all the loading
+        Person.init();//of peeps and thus needs to know about NPC's data.
+        Item.init();
 
 
         //I just took this controlflow code from stack overflow hehe

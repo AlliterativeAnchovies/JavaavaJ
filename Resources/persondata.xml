@@ -73,5 +73,21 @@
 			Sprites/SRPG_Slugsucker_Left_Step.png
 		</SpriteList>
 	</NPC>
+	<NPC name="Spikey the Dangerbro">
+		<StartingPosition room="0" x="700" y="200"/>
+		<Routine file="Routines/Spikey_the_Dangerbro.xml"/>
+		<SpriteList state="Default">
+			Sprites/SRPG_Melee_Bandit_Left.png|
+			Sprites/SRPG_Melee_Bandit_Left.png|
+			Sprites/SRPG_Melee_Bandit_Left_Step.png|
+			Sprites/SRPG_Melee_Bandit_Left_Step.png
+		</SpriteList>
+		<SpriteList state="Moving">
+			Sprites/SRPG_Melee_Bandit_Left.png|
+			Sprites/SRPG_Melee_Bandit_Left.png|
+			Sprites/SRPG_Melee_Bandit_Left_Step.png|
+			Sprites/SRPG_Melee_Bandit_Left_Step.png
+		</SpriteList>
+	</NPC>
 	
 </Root>

@@ -2,6 +2,7 @@ package sprites;
 
 //import java.awt.*;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 
@@ -17,11 +18,13 @@ public class NPC extends Person {
     private double destinationy;
     private double movespeed;
     private Directive curMovingDirectiveForCallback;
+    public static List<NPC> allNPCs;
     public NPC(int px,int py,HashMap<String,Image[]> tlist,String n,int room,String xmlroutinepath) {
         super(px,py,tlist);
         name = n;
         roomIn = room;
         routine = Routine.parseRoutine("Resources/"+xmlroutinepath);
+        allNPCs.add(this);
     }
 
     @Override protected void update() {
@@ -71,6 +74,10 @@ public class NPC extends Person {
                 curMovingDirectiveForCallback = r;
             }
         }
+    }
+
+    public static void init() {
+        allNPCs = new ArrayList<>();
     }
 
 }

@@ -12,6 +12,7 @@ public class Player extends Person {
     private Player(int px,int py,HashMap<String,Image[]> tlist) {
         super(px,py,tlist);
         roomIn = 0;
+        name = "player";
     }
 
     public static Player getPlayer() {

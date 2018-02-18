@@ -136,9 +136,46 @@ public class Person extends Sprite {
 
     //returns true if a Sprite with the name 's' can be seen by this person.
     public boolean canSee(String s) {
-        List<Sprite> allsprites = Sprite.allSprites;
-        for (Sprite spr : allsprites) {
-            if (spr.name.equals(s)) {
+        List<Sprite> tocheck = new ArrayList<>();
+        String nameToSearch = "";
+        //do a quick check if they're searching for the player, as this is probably a common
+        //trigger and we don't want to have to search through an array every time.
+        if (s.equals("person:player") || s.equals("player:player") || s.equals("player") || s.equals("sprite:player") || s.equals("player:@")) {
+            tocheck.add(Player.getPlayer());
+            nameToSearch = "player";
+        }
+        else {
+            String[] splitstr = s.split(":");
+            //tocheck[0] contains type of thing to check for: person, sprite, tile, item, npc
+            //tocheck[1] contains the name of the person/thing.  Special case is the character '@'
+            //which indicates that any/all that have the correct type are valid.
+            //if tocheck.length == 1, that means the person who wrote the xml doc forgot to put a qualifier.
+            //we will default to 'person' if so.
+            if (splitstr.length == 1) {
+                nameToSearch = splitstr[0];
+                tocheck.addAll(Person.people);
+            }
+            else {
+                nameToSearch = splitstr[1];
+                if (splitstr[0].equals("person")) {
+                    tocheck.addAll(Person.people);
+                }
+                else if (splitstr[0].equals("npc")) {
+                    tocheck.addAll(NPC.allNPCs);
+                }
+                else if (splitstr[0].equals("sprite")) {
+                    tocheck.addAll(Sprite.allSprites);
+                }
+                else if (splitstr[0].equals("tile")) {
+                    tocheck.addAll(Tile.allTiles);
+                }
+                else {
+                    System.out.println("There be something weird going on...  what's a '"+splitstr[0]+"'?");
+                }
+            }
+        }
+        for (Sprite spr : tocheck) {
+            if (nameToSearch=="@" || spr.name.equals(nameToSearch)) {
                 //spr is what we're checking for!
                 //TODO actually check visibility, currently its just checkin' if its in a small radius
                 if (Physics.magnitude(positionX-spr.positionX,positionY-spr.positionY)<Tile.TILE_WIDTH_IN_PIXELS*3) {
