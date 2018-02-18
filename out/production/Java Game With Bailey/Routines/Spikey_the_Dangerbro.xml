@@ -25,6 +25,9 @@
 					...|
 				</Say>
 			</Group>
+			<Group>
+				<Goto group="1"/>
+			</Group>
 			<Interrupt>
 				<Causes>
 					<Sees thing="player:@"/>
@@ -37,13 +40,13 @@
 		<Directive start="0:00" end="24:00">
 			<Group>
 				<Say seconds="1.5">
-					Hey, thanks for coming!
+					Hey, thanks for coming!|
 					You can go now!
 				</Say>
 				<Say seconds="3">
-					I just wanted to demonstrate the fact that I can notice your presence!
-					...
-					You smell good.
+					I just wanted to demonstrate the fact that I can notice your presence!|
+					...|
+					You smell good.|
 				</Say>
 			</Group>
 		</Directive>

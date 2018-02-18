@@ -25,6 +25,9 @@
 					...|
 				</Say>
 			</Group>
+			<Group>
+				<Goto group="1"/>
+			</Group>
 			<Interrupt>
 				<Causes>
 					<Sees thing="player:@"/>

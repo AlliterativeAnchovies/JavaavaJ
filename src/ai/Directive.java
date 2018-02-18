@@ -19,6 +19,7 @@ public class Directive {
     private List<List<String>> walkingSpeed;
     private int walkingprogress;
     private List<Interrupt> interrupts;
+    private List<List<String>> gotos;
 
 
     public Directive(XMLNode x) {
@@ -34,6 +35,7 @@ public class Directive {
         talkingSpeed = new ArrayList<>();
         toMove = new ArrayList<>();
         walkingSpeed = new ArrayList<>();
+        gotos = new ArrayList<>();
         List<XMLNode> groups = x.getChildrenWithKey("Group");
         for (XMLNode g : groups) {
             //load <Say> tags - these are for dialogue
@@ -62,6 +64,13 @@ public class Directive {
             talkingSpeed.add(talkingSpeed_);
             toMove.add(toMove_);
             walkingSpeed.add(walkingSpeed_);
+            //load <Goto> tags - these are for jumping around the groups.
+            List<XMLNode> loadedgotos = g.getChildrenWithKey("Goto");
+            ArrayList<String> toGoTo = new ArrayList<>();
+            for (XMLNode gt : loadedgotos) {
+                toGoTo.add(gt.getAttributeWithName("group"));
+            }
+            gotos.add(toGoTo);
         }
         talkingprogress = 0;
         walkingprogress = 0;
@@ -80,6 +89,17 @@ public class Directive {
     public List<Pair<String,String>> getDirections() {
         List<Pair<String,String>> toReturn = new ArrayList<Pair<String,String>>();
         boolean needsnewgroup = true;
+        if (gotos.size()>curGroup) {
+            if (gotos.get(curGroup).size()>0) {
+                int togoto = Integer.parseInt(gotos.get(curGroup).get(0));
+                if (togoto == curGroup) {
+                    throw new RuntimeException("ERROR!  Infinite loop detected in - be careful with GOTO!");
+                }
+                curGroup = togoto;
+                resetProgresses();
+                return getDirections();
+            }
+        }
         if (toSay.size()>curGroup&&toSay.get(curGroup).size()>talkingprogress) {
             toReturn.add(new Pair<>("Say",talkingSpeed.get(curGroup).get(talkingprogress)+"|"+toSay.get(curGroup).get(talkingprogress)));
             needsnewgroup = false;
@@ -89,11 +109,22 @@ public class Directive {
             needsnewgroup = false;
         }
         if (needsnewgroup) {
-            curGroup++;
+            if (curGroup<toSay.size()) {//don't infinitely increment curgroup...
+                curGroup++;
+                resetProgresses();
+            }
         }
         return toReturn;
     }
 
+    //called whenever the group changes
+    public void resetProgresses() {
+        talkingprogress = 0;
+        walkingprogress = 0;
+    }
+
+    //the 'callback' functions are used for information to be returned to Directive about the completion
+    //of actions!  Directive has no idea when a person finishes moving or talking, for example, so we need these.
     public void talkingCallback() {
         talkingprogress++;
     }
