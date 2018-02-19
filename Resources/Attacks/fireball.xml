@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Root>
+	<Stats name="fireball" damage="2"/>
 	<SpriteList state="Default">
 		Sprites/SRPG_Mage_Attack.png|
 		Sprites/SRPG_Mage_Attack.png|
