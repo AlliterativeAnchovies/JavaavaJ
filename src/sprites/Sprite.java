@@ -1,6 +1,8 @@
 package sprites;
 
+import main.Physics;
 import main.XMLNode;
+import sprites.rooms.Tile;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -93,6 +95,54 @@ public class Sprite {
 
     public double getPositionX() {return positionX;}
     public double getPositionY() {return positionY;}
+
+    public static List<Sprite> query(String s) {
+        List<Sprite> tocheck = new ArrayList<>();
+        List<Sprite> toReturn = new ArrayList<>();
+        String nameToSearch = "";
+        //do a quick check if they're searching for the player, as this is probably a common
+        //trigger and we don't want to have to search through an array every time.
+        if (s.equals("person:player") || s.equals("player:player") || s.equals("player") || s.equals("sprite:player") || s.equals("player:@")) {
+            tocheck.add(Player.getPlayer());
+            nameToSearch = "player";
+        }
+        else {
+            String[] splitstr = s.split(":");
+            //tocheck[0] contains type of thing to check for: person, sprite, tile, item, npc
+            //tocheck[1] contains the name of the person/thing.  Special case is the character '@'
+            //which indicates that any/all that have the correct type are valid.
+            //if tocheck.length == 1, that means the person who wrote the xml doc forgot to put a qualifier.
+            //we will default to 'person' if so.
+            if (splitstr.length == 1) {
+                nameToSearch = splitstr[0];
+                tocheck.addAll(Person.people);
+            }
+            else {
+                nameToSearch = splitstr[1];
+                if (splitstr[0].equals("person")) {
+                    tocheck.addAll(Person.people);
+                }
+                else if (splitstr[0].equals("npc")) {
+                    tocheck.addAll(NPC.allNPCs);
+                }
+                else if (splitstr[0].equals("sprite")) {
+                    tocheck.addAll(Sprite.allSprites);
+                }
+                else if (splitstr[0].equals("tile")) {
+                    tocheck.addAll(Tile.allTiles);
+                }
+                else {
+                    System.out.println("There be something weird going on...  what's a '"+splitstr[0]+"'?");
+                }
+            }
+        }
+        for (Sprite spr : tocheck) {
+            if (nameToSearch=="@" || spr.name.equals(nameToSearch)) {
+                toReturn.add(spr);
+            }
+        }
+        return toReturn;
+    }
 }
 
 /*

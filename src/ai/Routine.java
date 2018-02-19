@@ -3,15 +3,17 @@ package ai;
 import java.util.HashMap;
 import main.XML;
 import main.XMLNode;
-import main.Time;
 import java.util.List;
+import sprites.Sprite;
 
 public class Routine {
     HashMap<String,Directive[]> routines; //this functions similar to the inner workings of Sprite in that the
                                             //array of directives is indexed by a string representing the state,
                                             //and you can swap between states to change the behavior of the ai with
                                             //this routine.
-    String curState = "Default";
+    private String curState = "Default";
+    private String triggeredBy = null;
+
     public Directive getCurrentDirective() {
         Directive[] curStateDirective = routines.get(curState);
         int curindx = getCurDirectiveIndex(curStateDirective);
@@ -58,8 +60,14 @@ public class Routine {
     }
 
     //changes routine state
-    public void changeState(String to) {
+    public void changeState(String to,String cause) {
         curState = to;
+        triggeredBy = cause;
+    }
+
+    //returns what triggered the routine
+    public String getCause() {
+        return triggeredBy;
     }
 
 }

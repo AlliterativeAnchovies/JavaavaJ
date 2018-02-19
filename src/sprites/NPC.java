@@ -44,9 +44,10 @@ public class NPC extends Person {
         }
         //handle interrupts
         Directive r = routine.getCurrentDirective();
-        String interrupted = r.handleInterrupts(this);
-        if (interrupted!="") {
-            routine.changeState(interrupted);
+        //get interrupt data - returns pair of form (Name of New State,Name of Cause)
+        Pair<String,String> interrupted = r.handleInterrupts(this);
+        if (interrupted!=null) {
+            routine.changeState(interrupted.x,interrupted.y);
             r = routine.getCurrentDirective();
         }
         //handle directives
@@ -55,7 +56,8 @@ public class NPC extends Person {
         for (Pair<String,String> j : jobs) {
             //go through and perform all directions!
             if (j.x.equals("Say")&&!isSpeaking) {
-                //System.out.println(j.y);
+                //Data format: timeToTalkInSeconds|whatToSay
+                //example: 5|Hello will make a speech bubble 'Hello' for 5 seconds.
                 isSpeaking = true;
                 String[] info = j.y.split("\\|");
                 String toWrite = "";
@@ -65,6 +67,8 @@ public class NPC extends Person {
                 Main.renderer.makeSpeechBubble(this, r, toWrite, (int) (Double.parseDouble(info[0]) * Main.UPS));
             }
             else if (j.x.equals("Move")&&!isMoving) {
+                //Data format: walkingSpeed|∆x_coord,∆y_coord
+                //Example: 5|6,7 will move (6,7) at speed of 5 whatevers/second.
                 isMoving = true;
                 String[] info_ = j.y.split("\\|");
                 String[] info = info_[1].split(",");
@@ -72,6 +76,21 @@ public class NPC extends Person {
                 destinationy = positionY+Integer.parseInt(info[1]);
                 movespeed = Double.parseDouble(info_[0]);
                 curMovingDirectiveForCallback = r;
+            }
+            else if (j.x.equals("Attack")&&!isAttacking) {
+                //format: target|attackID
+                //Example: person:Danny Skellington|Attacks/fireball.xml will make this person attack
+                //Danny Skellington with the attack specified by Attacks/fireball.xml.
+                //(Note: Attacks/fireball.xml, while being an xml path, does not necessarily load the xml
+                //file every time - Attack will only load a file once, and then store it for future reference).
+                //(Note 2: All targets are of the same form as is used for trigger checks - see Sprite.query for
+                //a full explanation on the format, although its really quite simple).
+                isAttacking = true;
+                String[] info = j.y.split("\\|");
+                if (info[0].equals("@cause")) {
+                    info[0] = routine.getCause();
+                }
+                System.out.println("Attacking "+info[0]);
             }
         }
     }

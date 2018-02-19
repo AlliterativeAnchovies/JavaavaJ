@@ -28,7 +28,7 @@
 				<Say seconds="2">
 					Die monster!
 				</Say>
-				<Attack thing="@cause"/>
+				<Attack thing="@cause" using="Attacks/fireball.xml"/>
 			</Group>
 		</Directive>
 	</Routine>

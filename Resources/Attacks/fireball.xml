@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+	<SpriteList state="Default">
+		Sprites/SRPG_Mage_Attack.png|
+		Sprites/SRPG_Mage_Attack.png|
+		Sprites/SRPG_Mage_Attack2.png|
+		Sprites/SRPG_Mage_Attack2.png|
+		Sprites/SRPG_Mage_Attack3.png|
+		Sprites/SRPG_Mage_Attack3.png
+	</SpriteList>
+	<SpriteList state="Moving">
+		Sprites/SRPG_Mage_Attack.png|
+		Sprites/SRPG_Mage_Attack.png|
+		Sprites/SRPG_Mage_Attack2.png|
+		Sprites/SRPG_Mage_Attack2.png|
+		Sprites/SRPG_Mage_Attack3.png|
+		Sprites/SRPG_Mage_Attack3.png
+	</SpriteList>
+</Root>
