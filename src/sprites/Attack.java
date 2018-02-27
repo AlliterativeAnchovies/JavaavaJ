@@ -10,7 +10,15 @@ import java.util.HashMap;
 public class Attack extends Sprite {
     protected static HashMap<String, XMLNode> attackDatabase;
     protected int damage;
-    public static ArrayList<Attack> allAttacks;
+    private static ArrayList<Attack> allAttacks;
+
+    /**
+     * Getter for allAttacks
+     * @return allAttacks, a list of all attacks.
+     */
+    public static ArrayList<Attack> getAllAttacks() {
+        return allAttacks;
+    }
 
     /**
      * This is internally how the object is created.  Because you have to call 'super' at the very start,

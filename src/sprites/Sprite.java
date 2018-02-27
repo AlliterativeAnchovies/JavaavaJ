@@ -139,6 +139,9 @@ public class Sprite {
                 else if (splitstr[0].equals("tile")) {
                     tocheck.addAll(Tile.getAllTiles());
                 }
+                else if (splitstr[0].equals("attack")) {
+                    tocheck.addAll(Attack.getAllAttacks());
+                }
                 else {
                     System.out.println("There be something weird going on...  what's a '"+splitstr[0]+"'?");
                 }
