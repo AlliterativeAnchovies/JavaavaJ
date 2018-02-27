@@ -19,6 +19,16 @@ public class NPC extends Person {
     private double movespeed;
     private Directive curMovingDirectiveForCallback;
     private static List<NPC> allNPCs;
+
+    /**
+     * This is the standard creator for an NPC
+     * @param px their position to spawn
+     * @param py ditto
+     * @param tlist their pre-parsed spritelist
+     * @param n their name
+     * @param room what room they live in
+     * @param xmlroutinepath the file in which their routines are located
+     */
     public NPC(int px,int py,HashMap<String,Image[]> tlist,String n,int room,String xmlroutinepath) {
         super(px,py,tlist);
         name = n;
@@ -27,10 +37,18 @@ public class NPC extends Person {
         allNPCs.add(this);
     }
 
+    /**
+     * gets a list of all the npcs
+     * @return the square root of seven on tuesdays.
+     */
     public static List<NPC> getAllNPCs() {
         return allNPCs;
     }
 
+    /**
+     * The update loop for an npc
+     * In here they follow their routine and check for interuptions.
+     */
     @Override protected void update() {
         super.update();
 
@@ -100,6 +118,9 @@ public class NPC extends Person {
         }
     }
 
+    /**
+     * Initializes NPC code to be all fine and dandy
+     */
     public static void init() {
         allNPCs = new ArrayList<>();
     }

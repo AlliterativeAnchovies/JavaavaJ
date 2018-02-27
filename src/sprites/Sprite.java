@@ -27,6 +27,10 @@ public class Sprite {
     protected String name;
     private static List<Sprite> allSprites;
 
+    /**
+     * Guess what this returns?
+     * @return ALL THE SPRITES!
+     */
     @Contract(pure = true)
     public static List<Sprite> getAllSprites() {
         return allSprites;
@@ -39,19 +43,31 @@ public class Sprite {
     //the tile's absolute position shouldn't change, but its position relative to the
     //screen will.
     //Always call super.draw from child classes' overriden draws
+    /**
+     * I should probably delete the descriptive comment right above this because it's likely redundant
+     * @param offsetX Negative camera position
+     * @param offsetY Used for converting screen coords to game coords
+     * @param g The rendering context
+     */
     public void draw(int offsetX,int offsetY,Graphics g) {
         g.drawImage(getCurImage(),(int)(offsetX+positionX),(int)(offsetY+positionY),sizeX,sizeY,null);
         curFrame=(curFrame+1)%(textureList.get(curState).length*SPRITE_FRAME_RATE);//increment the frame
     }
 
+    /**
+     * Call this when you want to change the spritelist this Sprite renders from
+     * @param newstate the name of the new spritelist
+     */
     //changes sprite state (also resets frame on so it doesn't start in the middle of an animation)
     public void changeState(String newstate) {
         curState = newstate;
         curFrame = 0;
     }
 
-    //changes the state, but only if its not already in the state. (so as to avoid constantly changing to a
-    //certain state every update loop and having that reset the frame)
+    /**
+     * changes the state, but only if its not already in the state. (so as to avoid constantly changing to a
+     * certain state every update loop and having that reset the frame)
+     */
     public void changeStateIfNeeded(String newstate) {
         if (!curState.equals(newstate)) {
             changeState(newstate);
@@ -66,6 +82,15 @@ public class Sprite {
     }
 
     //creates a new sprite
+
+    /**
+     * creates a new sprite
+     * @param px the position
+     * @param py the sprite's worth on the stock market
+     * @param sx the width of the sprite
+     * @param sy the height of the sprite
+     * @param tlist the pre-parsed spritelist
+     */
     public Sprite(double px,double py,int sx,int sy,HashMap<String,Image[]> tlist) {
         positionX = px;
         positionY = py;
@@ -80,6 +105,12 @@ public class Sprite {
 
     //given some XML data, assuming it's in the standard form (see comment at bottom of file)
     //then this will fill hashmapToFill with the sprite data.
+
+    /**
+     * Creates a parsed sprite list
+     * @param t the node that contains the sprite data
+     * @param hashmapToFill fills this with the spritelist data
+     */
     public static void parseSpriteList(XMLNode t,HashMap<String,Image[]> hashmapToFill) {
         List<XMLNode> allSpriteStates = t.getChildrenWithKey("SpriteList");
         for (XMLNode spritestate : allSpriteStates) {
@@ -97,13 +128,39 @@ public class Sprite {
         }
     }
 
+    /**
+     * Does the opposite of not initing the sprite class.
+     */
     public static void init() {
         allSprites = new ArrayList<>();
     }
 
+    /**
+     * Teaches Willy Wonka the ethics of child labor.
+     * @return the x position
+     */
     public double getPositionX() {return positionX;}
+
+    /**
+     * Writes a tour guide for the galaxy, directed at people who mooch rides off of others.
+     * @return the y position
+     */
     public double getPositionY() {return positionY;}
 
+    /**
+     * Returns all sprites satisfying the query.
+     * Query format is:
+     * "type:name"
+     * For example, "attack:fireball"
+     * All classes deriving from sprites can be used this way.
+     * There is also the '@' wildcard, which returns all people/attacks/npc/tiles/etc.  Example:
+     * "person:@" to get all people.
+     * Player can be gotten using "player:player", "player:@", "person:player", "sprite:player", or even just "player"
+     * I recommend, personally, using "player:@" for consistency.  person:player and sprite:player are not safe on
+     * the off chance that an NPC or Sprite also has the name 'player'.
+     * @param s query string
+     * @return list of all sprites satisfying the query
+     */
     public static List<Sprite> query(String s) {
         List<Sprite> tocheck = new ArrayList<>();
         List<Sprite> toReturn = new ArrayList<>();
