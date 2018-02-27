@@ -90,7 +90,8 @@ public class NPC extends Person {
                 if (info[0].equals("@cause")) {
                     info[0] = routine.getCause();
                 }
-                System.out.println("Attacking "+info[0]);
+                //System.out.println("Attacking "+info[0]);
+                Attack.createAttack(positionX,positionY,info[1]);
             }
         }
     }
@@ -98,5 +99,7 @@ public class NPC extends Person {
     public static void init() {
         allNPCs = new ArrayList<>();
     }
+
+
 
 }

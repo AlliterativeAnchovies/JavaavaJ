@@ -4,6 +4,7 @@ import ai.Directive;
 import ai.Routine;
 import sprites.Person;
 import sprites.rooms.Room;
+import sprites.Attack;
 
 import javax.swing.JComponent;
 import java.util.List;
@@ -26,6 +27,7 @@ public class Renderer extends JComponent {
             int offsety = 0;
             Room.drawRooms(offsetx,offsety,g);
             Person.drawPeople(offsetx,offsety,g);
+            Attack.drawAttacks(offsetx,offsety,g);
             String timestring = Time.getTimeString();
             g.setFont(new Font("monospaced", Font.PLAIN,32));
             FontMetrics fontMetrics = g.getFontMetrics();

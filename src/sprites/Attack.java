@@ -4,11 +4,13 @@ import main.XMLNode;
 import main.XML;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Attack extends Sprite {
     protected static HashMap<String, XMLNode> attackDatabase;
     protected int damage;
+    public static ArrayList<Attack> allAttacks;
 
     /**
      * This is internally how the object is created.  Because you have to call 'super' at the very start,
@@ -21,6 +23,7 @@ public class Attack extends Sprite {
      */
     private Attack(double x,double y,HashMap<String,Image[]> tlist,int damage) {
         super(x,y,16,16,tlist);
+        allAttacks.add(this);
     }
 
     /**
@@ -51,5 +54,18 @@ public class Attack extends Sprite {
      */
     public static void init() {
         attackDatabase = new HashMap<>();
+        allAttacks = new ArrayList<>();
+    }
+
+    /**
+     * Draws all attacks
+     * @param offsetX This is the offset of the screen.  Used to translate screen coordinates to game coordinates.
+     * @param offsetY See offsetX ya dummy.
+     * @param g The rendering context.
+     */
+    public static void drawAttacks(int offsetX,int offsetY,Graphics g) {
+        for (Attack a : allAttacks) {
+            a.draw(offsetX,offsetY,g);
+        }
     }
 }

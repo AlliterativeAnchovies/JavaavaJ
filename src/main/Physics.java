@@ -5,6 +5,14 @@ public class Physics {
     //such as normalizing vectors.  This class will be more useful depending
     //on how physicsy our game gets.  Since its top-down, this will probably
     //be a small class
+
+    /**
+     * Normalises a vector
+     *
+     * @param a X-axis of the pair
+     * @param b Y-axis of the pair
+     * @return A pair with a magnitude of 1 in the same direction as a and b
+     */
     public static Pair<Double,Double> normalize(double a,double b) {
         double denominator = magnitude(a,b);
         if (denominator==0) {
@@ -17,5 +25,7 @@ public class Physics {
         return new Pair<Double,Double>(scalar*a,scalar*b);
     }
 
-    public static double magnitude(double a,double b) {return Math.sqrt(a*a+b*b);}
+    public static double magnitude(double a,double b) {
+        return Math.sqrt(a*a+b*b);
+    }
 }

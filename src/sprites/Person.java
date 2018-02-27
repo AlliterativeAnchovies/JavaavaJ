@@ -3,6 +3,7 @@ import main.Pair;
 import main.Physics;
 import main.XML;
 import main.XMLNode;
+import org.jetbrains.annotations.Contract;
 import sprites.rooms.*;
 
 import java.util.ArrayList;
@@ -15,13 +16,19 @@ import java.util.HashMap;
 public class Person extends Sprite {
     protected int health;
     protected int maxHealth;
-    public static ArrayList<Person> people;
+    private static ArrayList<Person> people;
     protected double velocityX;
     protected double velocityY;
     protected int roomIn;
     protected boolean isSpeaking = false;//these 3 are for
     protected boolean isMoving = false;//directives
-    protected boolean isAttacking = false;//TODO: This is feeling a bit spaghetti-y.  Investigate consolidation.
+    protected boolean isAttacking = false;//TODO: This is feeling a bit spaghetti-y.  Investigate consolidation
+
+
+    @Contract(pure = true)
+    public static ArrayList<Person> getPeople() {
+        return people;
+    }
 
     //these are called when they have completed a directive task
     public void stopSpeaking() {isSpeaking=false;}
@@ -147,5 +154,4 @@ public class Person extends Sprite {
         }
         return false;
     }
-
 }
