@@ -49,7 +49,7 @@ public class Main {
         Person.init();//of peeps and thus needs to know about NPC's data.
         Item.init();
         Attack.init();
-        
+
 
 
         //I just took this controlflow code from stack overflow hehe
