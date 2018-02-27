@@ -27,7 +27,7 @@ public class NPC extends Person {
         allNPCs.add(this);
     }
 
-    public static getAllNPCs() {
+    public static List<NPC> getAllNPCs() {
         return allNPCs;
     }
 
