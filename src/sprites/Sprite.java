@@ -2,6 +2,7 @@ package sprites;
 
 import main.Physics;
 import main.XMLNode;
+import org.jetbrains.annotations.Contract;
 import sprites.rooms.Tile;
 
 import java.awt.Graphics;
@@ -24,7 +25,12 @@ public class Sprite {
     protected String curState;
     protected int curFrame;
     protected String name;
-    public static List<Sprite> allSprites;
+    private static List<Sprite> allSprites;
+
+    @Contract(pure = true)
+    public static List<Sprite> getAllSprites() {
+        return allSprites;
+    }
 
     final static int SPRITE_FRAME_RATE = 2;//how many frames before sprite updates texture;
 
@@ -52,7 +58,9 @@ public class Sprite {
         }
     }
 
-    //returns current image of sprite
+    /**
+     * @return the current image of the sprite
+     */
     public Image getCurImage() {
         return textureList.get(curState)[curFrame/SPRITE_FRAME_RATE];
     }
@@ -115,21 +123,21 @@ public class Sprite {
             //we will default to 'person' if so.
             if (splitstr.length == 1) {
                 nameToSearch = splitstr[0];
-                tocheck.addAll(Person.people);
+                tocheck.addAll(Person.getPeople());
             }
             else {
                 nameToSearch = splitstr[1];
                 if (splitstr[0].equals("person")) {
-                    tocheck.addAll(Person.people);
+                    tocheck.addAll(Person.getPeople());
                 }
                 else if (splitstr[0].equals("npc")) {
-                    tocheck.addAll(NPC.allNPCs);
+                    tocheck.addAll(NPC.getAllNPCs());
                 }
                 else if (splitstr[0].equals("sprite")) {
-                    tocheck.addAll(Sprite.allSprites);
+                    tocheck.addAll(Sprite.getAllSprites());
                 }
                 else if (splitstr[0].equals("tile")) {
-                    tocheck.addAll(Tile.allTiles);
+                    tocheck.addAll(Tile.getAllTiles());
                 }
                 else {
                     System.out.println("There be something weird going on...  what's a '"+splitstr[0]+"'?");

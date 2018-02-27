@@ -1,4 +1,5 @@
 package sprites.rooms;
+import org.jetbrains.annotations.Contract;
 import sprites.*;
 import main.XML;
 import main.XMLNode;
@@ -15,12 +16,17 @@ public class Tile extends Sprite {
     public final static int TILE_HEIGHT_IN_PIXELS = 32;
     protected int tileID;
     static XML tileData;
-    public static List<Tile> allTiles;
+    private static List<Tile> allTiles;
     public enum TileState {
         NORMAL
     }
     private TileState status;
     List<Item> itemsOn;
+
+    @Contract(pure = true)
+    public static List<Tile> getAllTiles() {
+        return allTiles;
+    }
 
     //returns true if the tile can be walked on by the player normally
     public boolean isFloor() {return tileID>=0&&tileID<1000;}
