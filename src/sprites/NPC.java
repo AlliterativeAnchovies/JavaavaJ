@@ -18,13 +18,17 @@ public class NPC extends Person {
     private double destinationy;
     private double movespeed;
     private Directive curMovingDirectiveForCallback;
-    public static List<NPC> allNPCs;
+    private static List<NPC> allNPCs;
     public NPC(int px,int py,HashMap<String,Image[]> tlist,String n,int room,String xmlroutinepath) {
         super(px,py,tlist);
         name = n;
         roomIn = room;
         routine = Routine.parseRoutine("Resources/"+xmlroutinepath);
         allNPCs.add(this);
+    }
+
+    public static getAllNPCs() {
+        return allNPCs;
     }
 
     @Override protected void update() {
