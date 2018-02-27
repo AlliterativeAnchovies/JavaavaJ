@@ -1,10 +1,7 @@
 package main;
 
 import main.Renderer;
-import sprites.Item;
-import sprites.NPC;
-import sprites.Person;
-import sprites.Sprite;
+import sprites.*;
 import sprites.rooms.Room;
 import sprites.rooms.Tile;
 
@@ -51,6 +48,8 @@ public class Main {
         NPC.init();//NPC must be init-ed before Person b/c Person.init() does all the loading
         Person.init();//of peeps and thus needs to know about NPC's data.
         Item.init();
+        Attack.init();
+        
 
 
         //I just took this controlflow code from stack overflow hehe
